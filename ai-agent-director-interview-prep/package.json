@@ -1,0 +1,28 @@
+{
+  "name": "ai-agent-director-interview-prep",
+  "version": "1.0.0",
+  "description": "Complete Interactive Knowledge Graph with 95 Technical Concepts for AI Agent Director Interviews",
+  "main": "index.html",
+  "scripts": {
+    "merge": "node merge-all-nodes.js",
+    "serve": "python3 -m http.server 8000",
+    "open": "open http://localhost:8000"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "agents",
+    "interview",
+    "knowledge-graph",
+    "machine-learning",
+    "rag",
+    "transformer",
+    "multi-agent"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/ai-agent-director-interview-prep.git"
+  }
+}

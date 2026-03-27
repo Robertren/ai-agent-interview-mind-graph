@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Director Interview - Knowledge Graph</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+        
+        #container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        #sidebar {
+            width: 400px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px;
+            overflow-y: auto;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        #graph {
+            flex: 1;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .node-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        
+        .node-description {
+            color: #4a5568;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 20px 0 12px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .keypoint {
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 6px;
+            border-left: 3px solid #48bb78;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #2d3748;
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .pros, .cons {
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        
+        .pros {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+        }
+        
+        .cons {
+            background: #fff5f5;
+            border-left: 4px solid #f56565;
+        }
+        
+        .pros h4, .cons h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .pros h4 { color: #22543d; }
+        .cons h4 { color: #742a2a; }
+        
+        .pros li, .cons li {
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+        
+        .implementation {
+            margin-top: 20px;
+            padding: 15px;
+            background: #2d3748;
+            color: #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        
+        .connections {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .connection-tag {
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .connection-tag:hover {
+            transform: scale(1.05);
+        }
+        
+        .stats {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            font-size: 13px;
+            color: #2d3748;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .stats-label {
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        
+        .stats-value {
+            color: #667eea;
+            font-weight: 700;
+        }
+        
+        svg {
+            cursor: grab;
+        }
+        
+        svg:active {
+            cursor: grabbing;
+        }
+        
+        .node {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .node:hover {
+            filter: brightness(1.2);
+        }
+        
+        .link {
+            stroke: rgba(255, 255, 255, 0.3);
+            stroke-width: 1.5px;
+        }
+        
+        .node-label {
+            fill: white;
+            font-size: 11px;
+            font-weight: 600;
+            text-anchor: middle;
+            pointer-events: none;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+        }
+        
+        .legend {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            font-size: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .placeholder {
+            text-align: center;
+            padding: 60px 20px;
+            color: #a0aec0;
+        }
+        
+        .placeholder-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="sidebar">
+            <h1>🎯 AI Agent Director Interview</h1>
+            <p class="subtitle">Interactive Knowledge Graph • 95 Technical Concepts</p>
+            
+            <div id="node-details">
+                <div class="placeholder">
+                    <div class="placeholder-icon">🧠</div>
+                    <h3>Select a Concept</h3>
+                    <p>Click any node in the graph to explore detailed technical content, pros/cons, and implementation examples.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="graph"></div>
+        
+        <div class="stats">
+            <div class="stats-row">
+                <span class="stats-label">Total Concepts:</span>
+                <span class="stats-value">95</span>
+            </div>
+            <div class="stats-row">
+                <span class="stats-label">Categories:</span>
+                <span class="stats-value">10</span>
+            </div>
+            <div class="stats-row">
+                <span class="stats-label">Connections:</span>
+                <span class="stats-value" id="connections-count">140+</span>
+            </div>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FF6B6B;"></div>
+                <span>LLM Core</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #4ECDC4;"></div>
+                <span>Multimodal</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #45B7D1;"></div>
+                <span>Memory</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FFA07A;"></div>
+                <span>Reasoning</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #98D8C8;"></div>
+                <span>RAG</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #F7B731;"></div>
+                <span>Tools</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #A8E6CF;"></div>
+                <span>Production</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #FFD3B6;"></div>
+                <span>Safety</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="data/expanded-graph-data.js"></script>
+    <script src="data/all-batches-merged.js"></script>
+    <script>
+        // Graph visualization with D3.js force simulation
+        const width = window.innerWidth - 400;
+        const height = window.innerHeight;
+        
+        const svg = d3.select("#graph")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+        
+        const g = svg.append("g");
+        
+        // Zoom behavior
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 4])
+            .on("zoom", (event) => {
+                g.attr("transform", event.transform);
+            });
+        
+        svg.call(zoom);
+        
+        // Force simulation
+        const simulation = d3.forceSimulation(graphData.nodes)
+            .force("link", d3.forceLink(graphData.links).id(d => d.id).distance(100))
+            .force("charge", d3.forceManyBody().strength(-300))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collision", d3.forceCollide().radius(30));
+        
+        // Create links
+        const link = g.append("g")
+            .selectAll("line")
+            .data(graphData.links)
+            .join("line")
+            .attr("class", "link");
+        
+        // Create nodes
+        const node = g.append("g")
+            .selectAll("g")
+            .data(graphData.nodes)
+            .join("g")
+            .attr("class", "node")
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended))
+            .on("click", (event, d) => showNodeDetails(d));
+        
+        node.append("circle")
+            .attr("r", d => d.size || 15)
+            .attr("fill", d => d.color);
+        
+        node.append("text")
+            .attr("class", "node-label")
+            .attr("dy", 4)
+            .text(d => d.label);
+        
+        // Update positions
+        simulation.on("tick", () => {
+            link
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+            
+            node.attr("transform", d => `translate(${d.x},${d.y})`);
+        });
+        
+        // Drag functions
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+        
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+        
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+        
+        // Show node details
+        function showNodeDetails(node) {
+            const details = nodeDetails[node.id];
+            
+            if (!details || !details.details) {
+                document.getElementById("node-details").innerHTML = `
+                    <div class="placeholder">
+                        <h3>${node.label}</h3>
+                        <p>Details loading...</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = `
+                <div class="node-title">${details.name}</div>
+                <div class="node-description">${details.description}</div>
+            `;
+            
+            if (details.details.keyPoints) {
+                html += '<div class="section-title">Key Points</div>';
+                details.details.keyPoints.forEach(point => {
+                    html += `<div class="keypoint">${point}</div>`;
+                });
+            }
+            
+            if (details.details.proscons) {
+                html += '<div class="pros-cons">';
+                html += '<div class="pros"><h4>✅ Pros</h4><ul>';
+                details.details.proscons.pros.forEach(pro => {
+                    html += `<li>${pro}</li>`;
+                });
+                html += '</ul></div>';
+                
+                html += '<div class="cons"><h4>⚠️ Cons</h4><ul>';
+                details.details.proscons.cons.forEach(con => {
+                    html += `<li>${con}</li>`;
+                });
+                html += '</ul></div></div>';
+            }
+            
+            if (details.details.implementation) {
+                html += '<div class="section-title">Implementation</div>';
+                html += `<div class="implementation">${details.details.implementation}</div>`;
+            }
+            
+            if (details.connections) {
+                html += '<div class="section-title">Related Concepts</div>';
+                html += '<div class="connections">';
+                details.connections.forEach(conn => {
+                    html += `<span class="connection-tag" onclick="findAndShowNode('${conn.toLowerCase()}')">${conn}</span>`;
+                });
+                html += '</div>';
+            }
+            
+            document.getElementById("node-details").innerHTML = html;
+        }
+        
+        // Find and show node by name
+        function findAndShowNode(name) {
+            const node = graphData.nodes.find(n => n.id.toLowerCase() === name.toLowerCase() || n.label.toLowerCase() === name.toLowerCase());
+            if (node) {
+                showNodeDetails(node);
+                
+                // Center on node
+                const scale = 1.5;
+                const x = -node.x * scale + width / 2;
+                const y = -node.y * scale + height / 2;
+                
+                svg.transition()
+                    .duration(750)
+                    .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+            }
+        }
+        
+        console.log("✅ Knowledge Graph loaded:", graphData.nodes.length, "nodes", graphData.links.length, "links");
+    </script>
+</body>
+</html>
