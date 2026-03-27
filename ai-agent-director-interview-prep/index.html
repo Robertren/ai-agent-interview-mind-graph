@@ -273,6 +273,125 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+
+        .search-container {
+            position: fixed;
+            top: 20px;
+            left: 420px;
+            z-index: 1000;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 20px;
+            border-radius: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 14px;
+            width: 300px;
+            background: transparent;
+            color: #2d3748;
+        }
+
+        .search-input::placeholder {
+            color: #a0aec0;
+        }
+
+        .search-icon {
+            margin-right: 10px;
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 55px;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-results.show {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #e2e8f0;
+            transition: background 0.2s;
+        }
+
+        .search-result-item:hover {
+            background: #f7fafc;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-name {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 4px;
+        }
+
+        .search-result-desc {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .code-example {
+            margin-top: 20px;
+            padding: 15px;
+            background: #1a202c;
+            color: #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .code-example-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -291,7 +410,15 @@
         </div>
         
         <div id="graph"></div>
-        
+
+        <div class="search-container">
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search concepts... (e.g., RAG, attention, prompt)">
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+
         <div class="stats">
             <div class="stats-row">
                 <span class="stats-label">Total Concepts:</span>
@@ -309,35 +436,35 @@
         
         <div class="legend">
             <div class="legend-item">
-                <div class="legend-color" style="background: #FF6B6B;"></div>
+                <div class="legend-color" style="background: #3b82f6;"></div>
                 <span>LLM Core</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #4ECDC4;"></div>
+                <div class="legend-color" style="background: #14b8a6;"></div>
                 <span>Multimodal</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #45B7D1;"></div>
+                <div class="legend-color" style="background: #10b981;"></div>
                 <span>Memory</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #FFA07A;"></div>
+                <div class="legend-color" style="background: #f59e0b;"></div>
                 <span>Reasoning</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #98D8C8;"></div>
+                <div class="legend-color" style="background: #8b5cf6;"></div>
                 <span>RAG</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #F7B731;"></div>
+                <div class="legend-color" style="background: #ef4444;"></div>
                 <span>Tools</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #A8E6CF;"></div>
+                <div class="legend-color" style="background: #06b6d4;"></div>
                 <span>Production</span>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #FFD3B6;"></div>
+                <div class="legend-color" style="background: #ec4899;"></div>
                 <span>Safety</span>
             </div>
         </div>
@@ -480,11 +607,18 @@
                 html += '<div class="section-title">Related Concepts</div>';
                 html += '<div class="connections">';
                 details.connections.forEach(conn => {
-                    html += `<span class="connection-tag" onclick="findAndShowNode('${conn.toLowerCase()}')">${conn}</span>`;
+                    html += `<button class="nav-button" onclick="findAndShowNode('${conn.toLowerCase()}')">${conn}</button>`;
                 });
                 html += '</div>';
             }
-            
+
+            // Add code example for applicable nodes
+            const codeExample = getCodeExample(node.id);
+            if (codeExample) {
+                html += '<div class="section-title">💻 Code Example</div>';
+                html += `<div class="code-example">${codeExample}</div>`;
+            }
+
             document.getElementById("node-details").innerHTML = html;
         }
         
@@ -505,6 +639,466 @@
             }
         }
         
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+
+            if (query.length < 2) {
+                searchResults.classList.remove('show');
+                return;
+            }
+
+            const matches = graphData.nodes.filter(node => {
+                const details = nodeDetails[node.id];
+                const nameMatch = node.label.toLowerCase().includes(query) || node.id.toLowerCase().includes(query);
+                const descMatch = details && details.description && details.description.toLowerCase().includes(query);
+                return nameMatch || descMatch;
+            }).slice(0, 8); // Limit to 8 results
+
+            if (matches.length > 0) {
+                searchResults.innerHTML = matches.map(node => {
+                    const details = nodeDetails[node.id];
+                    return `
+                        <div class="search-result-item" onclick="searchAndJump('${node.id}')">
+                            <div class="search-result-name">${details ? details.name : node.label}</div>
+                            <div class="search-result-desc">${details ? details.description.substring(0, 80) + '...' : ''}</div>
+                        </div>
+                    `;
+                }).join('');
+                searchResults.classList.add('show');
+            } else {
+                searchResults.innerHTML = '<div class="search-result-item">No results found</div>';
+                searchResults.classList.add('show');
+            }
+        });
+
+        // Click outside to close search results
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                searchResults.classList.remove('show');
+            }
+        });
+
+        function searchAndJump(nodeId) {
+            const node = graphData.nodes.find(n => n.id === nodeId);
+            if (node) {
+                showNodeDetails(node);
+
+                // Center and zoom on node
+                const scale = 2;
+                const x = -node.x * scale + width / 2;
+                const y = -node.y * scale + height / 2;
+
+                svg.transition()
+                    .duration(750)
+                    .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+
+                searchResults.classList.remove('show');
+                searchInput.value = '';
+            }
+        }
+
+        // Code examples for applicable nodes
+        function getCodeExample(nodeId) {
+            const examples = {
+                'rag': `# RAG Implementation
+from langchain.vectorstores import Chroma
+from langchain.embeddings import OpenAIEmbeddings
+
+# 1. Create vector store
+vectorstore = Chroma.from_documents(
+    documents=docs,
+    embedding=OpenAIEmbeddings()
+)
+
+# 2. Retrieve relevant docs
+retriever = vectorstore.as_retriever(k=3)
+relevant_docs = retriever.get_relevant_documents(query)
+
+# 3. Augment prompt and generate
+context = "\\n".join([doc.page_content for doc in relevant_docs])
+prompt = f"Context: {context}\\n\\nQuestion: {query}"
+response = llm(prompt)`,
+
+                'cot': `# Chain-of-Thought Prompting
+prompt = """
+Question: Roger has 5 tennis balls. He buys 2 more cans of tennis balls.
+Each can has 3 tennis balls. How many tennis balls does he have now?
+
+Let's think step by step:
+1. Roger starts with 5 balls
+2. He buys 2 cans, each with 3 balls
+3. New balls = 2 × 3 = 6 balls
+4. Total = 5 + 6 = 11 balls
+
+Answer: 11 balls
+"""`,
+
+                'react': `# ReAct Pattern
+def react_loop(question, max_steps=5):
+    for i in range(max_steps):
+        # Thought
+        thought = llm(f"Thought: {question}")
+
+        # Action
+        if "search" in thought.lower():
+            action = "search"
+            query = extract_query(thought)
+            observation = search_api(query)
+        elif "calculate" in thought.lower():
+            action = "calculate"
+            observation = calculator(thought)
+        elif "finish" in thought.lower():
+            return extract_answer(thought)
+
+        # Update context
+        question = f"{thought}\\nObservation: {observation}"`,
+
+                'attention': `# Multi-Head Attention
+import torch.nn as nn
+
+class MultiHeadAttention(nn.Module):
+    def __init__(self, d_model, num_heads):
+        super().__init__()
+        self.d_k = d_model // num_heads
+        self.num_heads = num_heads
+
+        self.W_q = nn.Linear(d_model, d_model)
+        self.W_k = nn.Linear(d_model, d_model)
+        self.W_v = nn.Linear(d_model, d_model)
+        self.W_o = nn.Linear(d_model, d_model)
+
+    def forward(self, x):
+        # x: (batch, seq_len, d_model)
+        Q = self.W_q(x).view(batch, -1, self.num_heads, self.d_k)
+        K = self.W_k(x).view(batch, -1, self.num_heads, self.d_k)
+        V = self.W_v(x).view(batch, -1, self.num_heads, self.d_k)
+
+        # Scaled dot-product attention
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.d_k)
+        attn = torch.softmax(scores, dim=-1)
+        out = torch.matmul(attn, V)
+
+        return self.W_o(out.view(batch, -1, d_model))`,
+
+                'lora': `# LoRA Fine-tuning
+from peft import LoraConfig, get_peft_model
+
+# 1. Configure LoRA
+lora_config = LoraConfig(
+    r=8,  # rank
+    lora_alpha=32,
+    target_modules=["q_proj", "v_proj"],
+    lora_dropout=0.05,
+    bias="none"
+)
+
+# 2. Apply to model
+model = get_peft_model(base_model, lora_config)
+
+# Only 0.1% parameters trainable!
+trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)`,
+
+                'quantization': `# INT8 Quantization
+from transformers import AutoModelForCausalLM
+
+# Load 8-bit quantized model
+model = AutoModelForCausalLM.from_pretrained(
+    "meta-llama/Llama-2-7b",
+    load_in_8bit=True,  # 7GB → 3.5GB memory
+    device_map="auto"
+)
+
+# Or INT4 (GPTQ)
+from auto_gptq import AutoGPTQForCausalLM
+
+model = AutoGPTQForCausalLM.from_quantized(
+    "TheBloke/Llama-2-7B-GPTQ",
+    use_safetensors=True
+)  # 7GB → 1.8GB memory`,
+
+                'kvcache': `# KV Cache Implementation
+class KVCache:
+    def __init__(self):
+        self.cache = {}
+
+    def forward(self, x, layer_idx):
+        if layer_idx in self.cache:
+            # Use cached K, V
+            past_k, past_v = self.cache[layer_idx]
+            k = torch.cat([past_k, new_k], dim=1)
+            v = torch.cat([past_v, new_v], dim=1)
+        else:
+            k, v = new_k, new_v
+
+        # Store for next token
+        self.cache[layer_idx] = (k, v)
+        return attention(q, k, v)`,
+
+                'vectordb': `# Vector Database Usage
+import chromadb
+
+# 1. Initialize
+client = chromadb.Client()
+collection = client.create_collection("docs")
+
+# 2. Add embeddings
+collection.add(
+    embeddings=embeddings_list,
+    documents=text_list,
+    ids=id_list
+)
+
+# 3. Query
+results = collection.query(
+    query_embeddings=[query_embedding],
+    n_results=5
+)`,
+
+                'prompting': `# Prompt Engineering Best Practices
+
+# Bad: Vague
+"Tell me about AI"
+
+# Good: Specific with context
+"""
+You are an AI expert. Explain Transformer architecture
+focusing on:
+1. Self-attention mechanism
+2. Why it's better than RNNs
+3. Trade-offs (O(n²) complexity)
+
+Use technical terms but provide examples.
+"""
+
+# With few-shot examples
+"""
+Q: What is LoRA?
+A: LoRA (Low-Rank Adaptation) fine-tunes models by adding
+small trainable matrices, reducing parameters by 100x.
+
+Q: What is quantization?
+A: <model completes>
+"""`,
+
+                'multiagent': `# Multi-Agent System
+from crewai import Agent, Task, Crew
+
+# Define agents
+researcher = Agent(
+    role="Researcher",
+    goal="Find latest AI papers",
+    tools=[search_tool]
+)
+
+writer = Agent(
+    role="Writer",
+    goal="Summarize findings",
+    tools=[text_tool]
+)
+
+# Create crew
+crew = Crew(
+    agents=[researcher, writer],
+    tasks=[research_task, write_task],
+    process="sequential"
+)
+
+result = crew.kickoff()`,
+
+                'langchain': `# LangChain Agent
+from langchain.agents import create_react_agent
+
+# Define tools
+tools = [
+    Tool(name="Search", func=search),
+    Tool(name="Calculator", func=calc),
+    Tool(name="Wikipedia", func=wiki)
+]
+
+# Create agent
+agent = create_react_agent(
+    llm=ChatOpenAI(model="gpt-4"),
+    tools=tools,
+    prompt=react_prompt
+)
+
+# Execute
+agent.invoke({"input": "What's the GDP of Japan in 2023?"})`,
+
+                'sparse': `# BM25 Sparse Retrieval
+from rank_bm25 import BM25Okapi
+
+# 1. Tokenize corpus
+tokenized_corpus = [doc.split() for doc in corpus]
+
+# 2. Build index
+bm25 = BM25Okapi(tokenized_corpus)
+
+# 3. Query
+query = "machine learning algorithms"
+scores = bm25.get_scores(query.split())
+
+# 4. Get top-k
+top_k = np.argsort(scores)[::-1][:5]`,
+
+                'reranking': `# Cross-Encoder Reranking
+from sentence_transformers import CrossEncoder
+
+# 1. Initial retrieval (fast)
+candidates = retriever.get_top_k(query, k=100)
+
+# 2. Rerank with cross-encoder (accurate)
+reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+
+pairs = [[query, doc] for doc in candidates]
+scores = reranker.predict(pairs)
+
+# 3. Get final top-k
+top_k_idx = np.argsort(scores)[::-1][:10]
+final_docs = [candidates[i] for i in top_k_idx]`,
+
+                'embeddings': `# Create Embeddings
+from sentence_transformers import SentenceTransformer
+
+# Load model
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# Encode documents
+docs = ["AI is transforming industries", "Machine learning basics"]
+embeddings = model.encode(docs)
+
+# Cosine similarity
+from sklearn.metrics.pairwise import cosine_similarity
+
+query_emb = model.encode(["artificial intelligence"])
+similarities = cosine_similarity(query_emb, embeddings)[0]`,
+
+                'tooluse': `# Function Calling
+tools = [
+    {
+        "name": "get_weather",
+        "description": "Get current weather",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "location": {"type": "string"}
+            }
+        }
+    }
+]
+
+# LLM generates function call
+response = openai.ChatCompletion.create(
+    model="gpt-4",
+    messages=[{"role": "user", "content": "What's weather in Paris?"}],
+    tools=tools
+)
+
+# Execute function
+if response.tool_calls:
+    result = get_weather(location="Paris")`,
+
+                'serving': `# Model Serving with vLLM
+from vllm import LLM, SamplingParams
+
+# Load model
+llm = LLM(
+    model="meta-llama/Llama-2-7b",
+    tensor_parallel_size=4,  # 4 GPUs
+    max_model_len=4096
+)
+
+# Continuous batching
+prompts = [...]  # Multiple requests
+sampling = SamplingParams(temperature=0.7, top_p=0.9)
+
+# Fast inference
+outputs = llm.generate(prompts, sampling)`,
+
+                'monitoring': `# Production Monitoring
+from prometheus_client import Counter, Histogram
+
+# Metrics
+request_count = Counter('llm_requests_total', 'Total requests')
+latency = Histogram('llm_latency_seconds', 'Request latency')
+token_count = Counter('llm_tokens_total', 'Tokens generated')
+
+# Track
+with latency.time():
+    response = llm.generate(prompt)
+    request_count.inc()
+    token_count.inc(len(response.tokens))`,
+
+                'alignment': `# RLHF Training Pipeline
+# Stage 1: Supervised Fine-Tuning
+sft_model = train_sft(base_model, demonstrations)
+
+# Stage 2: Reward Model
+reward_model = train_reward_model(
+    model=sft_model,
+    preference_data=human_preferences
+)
+
+# Stage 3: PPO Optimization
+rlhf_model = train_ppo(
+    policy=sft_model,
+    reward_fn=reward_model.score,
+    kl_penalty=0.1
+)`,
+
+                'filtering': `# Content Filtering
+from transformers import pipeline
+
+# Toxicity detection
+classifier = pipeline(
+    "text-classification",
+    model="unitary/toxic-bert"
+)
+
+def filter_content(text):
+    result = classifier(text)[0]
+
+    if result['label'] == 'TOXIC' and result['score'] > 0.8:
+        return "Content filtered"
+
+    return text
+
+# PII detection
+import presidio_analyzer
+
+analyzer = AnalyzerEngine()
+results = analyzer.analyze(text, entities=["EMAIL", "PHONE"])`,
+
+                'caching': `# Semantic Caching
+from langchain.cache import RedisSemanticCache
+
+# Setup
+cache = RedisSemanticCache(
+    redis_url="redis://localhost:6379",
+    embedding=OpenAIEmbeddings(),
+    score_threshold=0.95
+)
+
+# Query with cache
+def cached_query(prompt):
+    # Check semantic similarity
+    cached_result = cache.lookup(prompt)
+    if cached_result:
+        return cached_result
+
+    # Generate and cache
+    result = llm(prompt)
+    cache.update(prompt, result)
+    return result`
+            };
+
+            return examples[nodeId] || null;
+        }
+
         console.log("✅ Knowledge Graph loaded:", graphData.nodes.length, "nodes", graphData.links.length, "links");
     </script>
 </body>
