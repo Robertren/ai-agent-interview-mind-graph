@@ -579,9 +579,12 @@
         function showNodeDetails(node) {
             const details = nodeDetails[node.id];
 
+            console.log('📝 Showing details for:', node.id, '-', details?.name || node.label);
+
             // Always scroll sidebar to top when showing new node details
             const sidebar = document.getElementById('sidebar');
             if (sidebar) {
+                console.log('⬆️ Scrolling sidebar to top (was at:', sidebar.scrollTop, ')');
                 sidebar.scrollTop = 0;
 
                 // Add brief highlight animation to show content changed
@@ -589,6 +592,8 @@
                 void sidebar.offsetWidth; // Force reflow
                 sidebar.classList.add('sidebar-highlight');
                 setTimeout(() => sidebar.classList.remove('sidebar-highlight'), 600);
+            } else {
+                console.warn('⚠️ Sidebar element not found!');
             }
 
             if (!details || !details.details) {
@@ -652,14 +657,49 @@
             document.getElementById("node-details").innerHTML = html;
         }
         
-        // Find and show node by name
+        // Find and show node by name (handles spaces, newlines, and various formats)
         function findAndShowNode(name) {
-            const node = graphData.nodes.find(n => n.id.toLowerCase() === name.toLowerCase() || n.label.toLowerCase() === name.toLowerCase());
+            if (!name) return;
+
+            const searchName = name.toLowerCase().trim();
+
+            // Try multiple matching strategies to handle different name formats
+            const node = graphData.nodes.find(n => {
+                const nodeId = n.id.toLowerCase();
+                const nodeLabel = n.label.toLowerCase().replace(/\n/g, ' ').trim();
+                const nodeLabelNoSpaces = nodeLabel.replace(/\s+/g, '');
+                const searchNoSpaces = searchName.replace(/\s+/g, '');
+
+                // Strategy 1: Exact ID match (most reliable)
+                if (nodeId === searchName) return true;
+                if (nodeId === searchNoSpaces) return true;
+
+                // Strategy 2: Exact label match (with newlines normalized to spaces)
+                if (nodeLabel === searchName) return true;
+
+                // Strategy 3: Match without any spaces
+                if (nodeLabelNoSpaces === searchNoSpaces) return true;
+
+                // Strategy 4: Partial match (for compound names)
+                if (nodeLabel.includes(searchName)) return true;
+                if (searchName.includes(nodeLabel)) return true;
+
+                // Strategy 5: Check if node details name matches
+                const details = nodeDetails[n.id];
+                if (details && details.name) {
+                    const detailsName = details.name.toLowerCase();
+                    if (detailsName === searchName) return true;
+                    if (detailsName.replace(/\s+/g, '') === searchNoSpaces) return true;
+                }
+
+                return false;
+            });
+
             if (node) {
-                // Update details (this will also scroll sidebar to top)
+                // Update details (this will also scroll sidebar to top and add highlight)
                 showNodeDetails(node);
 
-                // Center on node (with animation)
+                // Center on node (with smooth animation)
                 const scale = 1.5;
                 const x = -node.x * scale + width / 2;
                 const y = -node.y * scale + height / 2;
@@ -667,6 +707,8 @@
                 svg.transition()
                     .duration(750)
                     .call(zoom.transform, d3.zoomIdentity.translate(x, y).scale(scale));
+            } else {
+                console.warn('❌ Node not found for:', name, '(searched:', searchName, ')');
             }
         }
         
