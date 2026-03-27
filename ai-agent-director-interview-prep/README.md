@@ -1,8 +1,8 @@
-# AI Agent Director Interview Preparation
+# AI Agent Interview Mind Graph
 
 > **Complete Interactive Knowledge Graph with 96 Technical Concepts**
 
-A comprehensive, bilingual (EN/中文) interactive knowledge graph covering all essential topics for AI Agent Director interviews. Features detailed technical explanations, pros/cons analysis, code examples, and intelligent search.
+A comprehensive, bilingual (EN/中文) interactive knowledge graph covering all essential topics for AI Agent interviews. Features detailed technical explanations, pros/cons analysis, code examples, and intelligent search.
 
 ## 🌐 Live Demo
 
@@ -30,14 +30,12 @@ Each node includes:
 ## 📁 Structure
 
 ```
-ai-agent-director-interview-prep/
+ai-agent-interview-mind-graph/
 ├── index.html              # Main interactive visualization
 ├── data/
 │   ├── expanded-graph-data.js          # Graph structure (nodes, links, categories)
-│   └── complete-nodeDetails-all-95.js  # Full node details (merged)
+│   └── all-batches-merged.js           # Full node details with bilingual content
 ├── docs/
-│   ├── COMPLETION-TRACKER.md    # Progress tracking
-│   ├── FINAL-STATUS.md          # Final status summary
 │   └── study-guide.md           # Recommended study paths
 ├── assets/
 │   └── preview.png              # Screenshot
@@ -258,7 +256,7 @@ This comprehensive knowledge graph covers everything you need for an AI Agent Di
 - ✅ Prepare in English or Chinese
 - ✅ Quick reference during prep
 
-**Good luck with your AI Agent Director interview!** 🚀
+**Good luck with your AI Agent interview!** 🚀
 
 *Last updated: March 28, 2026*
 *Version: 2.0 with Bilingual Support*

@@ -1,7 +1,7 @@
 {
-  "name": "ai-agent-director-interview-prep",
+  "name": "ai-agent-interview-mind-graph",
   "version": "1.0.0",
-  "description": "Complete Interactive Knowledge Graph with 95 Technical Concepts for AI Agent Director Interviews",
+  "description": "Complete Interactive Knowledge Graph with 96 Technical Concepts for AI Agent Interviews",
   "main": "index.html",
   "scripts": {
     "merge": "node merge-all-nodes.js",
@@ -23,6 +23,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/ai-agent-director-interview-prep.git"
+    "url": "https://github.com/Robertren/ai-agent-interview-mind-graph.git"
   }
 }
