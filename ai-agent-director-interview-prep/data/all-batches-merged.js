@@ -1,6 +1,7 @@
 /**
  * Complete Node Details - All 96 Nodes
  * AI Agent Director Interview Preparation
+ * With Chinese Translations for Key Nodes
  */
 
 const nodeDetails = {};
@@ -195,7 +196,28 @@ nodeDetails.attention = {
         "Long Context",
         "Inference Optimization",
         "Flash Attention"
-    ]
+    ],
+    name_zh: "多头注意力机制",
+    description_zh: "允许模型使用多个学习模式同时关注输入的不同部分的核心机制。",
+    keyPoints_zh: [
+        "<strong>自注意力公式:</strong> 对每个token，计算Query (我在找什么)，Key (我提供什么)，Value (我包含什么): Q=XW_q, K=XW_k, V=XW_v。注意力权重: α = softmax(QK^T / √d_k)。输出: αV。每个token并行关注所有其他token。",
+        "<strong>缩放因子 √d_k:</strong> 将点积除以 √d_k 以防止梯度消失。没有缩放，点积增长为 O(d_k)，将softmax推入梯度消失的饱和区域。示例: d_k=64，√d_k=8 将分数归一化到合理范围 (-3 到 3)。",
+        "<strong>多头机制:</strong> 运行 h=8-128 个并行注意力头，具有不同的投影矩阵 W^Q_i, W^K_i, W^V_i。每个头学习关注不同方面: 局部语法，长程语义，位置模式，句法依赖。连接所有头输出并投影: MultiHead = Concat(head_1,...,head_h)W^O。",
+        "<strong>注意力模式类型:</strong> 分析显示: 局部头 (关注邻居 ±2 位置)，全局头 (关注远距离tokens)，位置头 (关注特定位置如句子开头/结尾)，句法头 (主谓一致)，语义头 (共指消解，实体跟踪)。",
+        "<strong>计算复杂度分析:</strong> 时间: O(n²d)，其中 n=序列长度，d=隐藏维度。内存: O(bn²h)，其中 b=批大小，h=头数。对于 n=2048, d=768, h=12, b=8: 存储 8×12×2048×2048 ≈ 400M 浮点数 (1.6GB)。二次缩放限制最大序列长度。"
+    ],
+    proscons_zh: {
+        pros: [
+            "全局感受野: 每个token直接关注所有其他token，无需多跳传播",
+            "并行计算: 所有 O(n²) 注意力分数同时计算，充分利用GPU并行性",
+            "可解释: 注意力权重提供输入和输出之间的显式对齐，有助于调试和信任"
+        ],
+        cons: [
+            "二次内存: n个token序列的 O(n²)，根据硬件限制为 2K-128K tokens",
+            "长序列昂贵: 10K tokens → 100M 注意力分数，每个都需要计算和存储",
+            "注意力稀释: 10K tokens，每个平均获得 0.01% 注意力 (1/10000)，稀有依赖的弱信号"
+        ]
+    }
 };
 nodeDetails.audioprocess = {
     name: "Audio Processing",
@@ -687,7 +709,34 @@ nodeDetails.cot = {
         "ReAct",
         "Tree-of-Thoughts",
         "Prompting"
-    ]
+    ],
+    name_zh: "Chain-of-Thought (思维链)",
+    description_zh: "逐步推理。在答案前显示中间步骤。大幅提升复杂推理。",
+    keyPoints_zh: [
+        "方法: 在提示中添加 'Let's think step by step' 或提供示例推理链。",
+        "示例: Q: '罗杰有5个网球。他买了2罐网球，每罐3个。他现在有多少个？' A: '让我们一步步思考: 1) 罗杰开始有5个球。2) 他买了2罐，每罐3个。3) 新球 = 2 × 3 = 6个球。4) 总计 = 5 + 6 = 11个球。答案: 11个球'",
+        "效果: GSM8K (数学): 17% → 58%。MMLU (常识): 43% → 56%。在需要多步推理的任务上至关重要。",
+        "机制: 迫使模型使用更多计算 (更多tokens)。显式中间步骤 = 更好的逻辑。",
+        "变体: Zero-shot CoT ('让我们一步步思考')，Few-shot CoT (提供推理示例)，Self-Consistency (多次采样，投票选择答案)。",
+        "局限: 对简单任务过度，增加延迟和成本，可能产生错误的推理链。",
+        "最佳实践: 用于数学、逻辑、规划。在少样本示例中显示推理。使用自洽性提高准确性。"
+    ],
+    proscons_zh: {
+        pros: [
+            "大幅提升推理",
+            "可解释 (显示步骤)",
+            "在数学/逻辑上表现良好",
+            "简单易实现",
+            "经验证有效"
+        ],
+        cons: [
+            "增加延迟 (更多tokens)",
+            "成本更高",
+            "对简单任务过度",
+            "可能产生错误推理",
+            "不总是产生正确答案"
+        ]
+    }
 };
 nodeDetails.crewai = {
     name: "CrewAI & MetaGPT",
@@ -1449,7 +1498,35 @@ nodeDetails.lora = {
     connections: [
         "SFT",
         "QLoRA"
-    ]
+    ],
+    name_zh: "LoRA (低秩适应)",
+    description_zh: "通过训练小的低秩矩阵微调模型。在Adapter层注入。参数减少100-1000倍。",
+    keyPoints_zh: [
+        "核心思想: 冻结原始权重 W。添加低秩更新: ΔW = BA，其中 B ∈ R^(d×r)，A ∈ R^(r×k)，r << d。前向: y = Wx + BAx = Wx + ΔWx。",
+        "秩 r: 典型 r=8-64。r越低 = 参数越少，但容量降低。r=8 对大多数任务足够好。",
+        "目标模块: 对 Query 和 Value 投影应用 LoRA (在注意力中)。可选: 也可应用于 Key，MLP层。",
+        "训练: 仅训练 A 和 B 矩阵 (~0.1% 参数)。原始 W 保持冻结。使用标准梯度下降。",
+        "推理: 合并 LoRA 权重: W' = W + BA。或保持分离以切换适配器。",
+        "示例: 7B 模型，r=8，针对 Q 和 V。可训练参数: 7B × 0.001 = 7M (vs 7B 完全微调)。GPU内存: ~10GB (vs 80GB)。",
+        "用例: 特定任务微调，指令调优，个性化，多任务 (每个任务一个 LoRA)。"
+    ],
+    proscons_zh: {
+        pros: [
+            "参数少100倍 (7B → 7M)",
+            "GPU内存少8倍",
+            "训练快10倍",
+            "可组合 (叠加多个LoRA)",
+            "保持原始模型冻结",
+            "生产验证"
+        ],
+        cons: [
+            "比完全微调稍差 (1-3%)",
+            "需要调整秩 r",
+            "合并开销",
+            "不适用于架构更改",
+            "在小模型上不太有效"
+        ]
+    }
 };
 nodeDetails.memory = {
     name: "Agent Memory",
@@ -1637,7 +1714,36 @@ nodeDetails.multiagent = {
         "Agent Communication",
         "Agent Frameworks",
         "Memory"
-    ]
+    ],
+    name_zh: "多智能体系统",
+    description_zh: "多个LLM智能体协作。通过消息传递协调。可扩展的任务分解。",
+    keyPoints_zh: [
+        "架构: 多个专门的智能体 (研究员，编写者，审阅者)。通过消息传递或共享内存通信。",
+        "协调: 集中式 (主智能体协调)，分散式 (点对点)，分层式 (子团队)。",
+        "任务分配: 静态 (预分配角色)，动态 (基于能力)，基于拍卖 (智能体竞标任务)。",
+        "通信: 结构化消息 (JSON)，自然语言，共享知识库。协议定义消息格式。",
+        "示例: CrewAI (角色智能体)，AutoGPT (自主)，MetaGPT (软件团队: PM，架构师，工程师)。",
+        "优势: 并行化 (速度更快)，专业化 (每个智能体专家)，可扩展性 (添加更多智能体)，容错 (冗余)。",
+        "挑战: 协调开销，一致性 (冲突决策)，成本 (多次LLM调用)，调试复杂性。"
+    ],
+    proscons_zh: {
+        pros: [
+            "并行化任务",
+            "专业化智能体",
+            "可扩展",
+            "容错",
+            "复杂问题解决",
+            "模块化"
+        ],
+        cons: [
+            "协调开销",
+            "一致性挑战",
+            "昂贵 (更多LLM调用)",
+            "调试复杂",
+            "可能冲突",
+            "通信延迟"
+        ]
+    }
 };
 nodeDetails.multimodal = {
     name: "Multimodal AI",
@@ -2012,7 +2118,34 @@ nodeDetails.quantization = {
         "LoRA",
         "QLoRA",
         "Serving"
-    ]
+    ],
+    name_zh: "量化",
+    description_zh: "将权重从FP16/FP32降低到INT8/INT4。减少2-8倍内存。质量损失1-5%。",
+    keyPoints_zh: [
+        "后训练量化 (PTQ): 无需重新训练。通过校准数据计算缩放因子。FP16 → INT8: 缩放 = max(abs(权重)) / 127。",
+        "INT8: 每个权重8位。内存减少2倍 (vs FP16)。准确度损失~1-2%。最常见。",
+        "INT4: 每个权重4位。内存减少4倍。准确度损失~3-5%。需要GPTQ/AWQ等方法。",
+        "量化感知训练 (QAT): 在训练期间模拟量化。更好的准确度但需要重新训练。对PTQ太大的模型有用。",
+        "混合精度: 对敏感层 (嵌入，输出) 使用FP16，对其他层使用INT8。平衡质量和内存。",
+        "示例: 7B 模型，FP16 = 14GB。INT8 = 7GB。INT4 = 3.5GB。在A100 (40GB) 上启用13B INT8，70B INT4。",
+        "工具: bitsandbytes (INT8)，GPTQ/AWQ (INT4)，HuggingFace transformers (集成)。"
+    ],
+    proscons_zh: {
+        pros: [
+            "2-4倍内存减少",
+            "2-3倍速度提升 (INT8 内核)",
+            "更低成本",
+            "移动部署 (INT4 在手机上启用7B模型)",
+            "节能"
+        ],
+        cons: [
+            "质量下降 (INT8 1-2%，INT4 3-5%)",
+            "任务相关 (数学/推理更敏感)",
+            "需要校准",
+            "硬件支持有限 (INT4 仅限最新GPU)",
+            "调试更难"
+        ]
+    }
 };
 nodeDetails.rag = {
     name: "RAG (Retrieval-Augmented Generation)",
@@ -2051,7 +2184,33 @@ nodeDetails.rag = {
         "Memory",
         "Chunking",
         "Transformer"
-    ]
+    ],
+    name_zh: "RAG (检索增强生成)",
+    description_zh: "检索相关文档，注入到提示中，生成有依据的回答。减少幻觉，增加知识。",
+    keyPoints_zh: [
+        "流程: 查询 → 检索 (从向量数据库获取top-k文档) → 增强提示 (添加文档作为上下文) → 生成 (LLM)。",
+        "优势: 基于真实数据 (减少幻觉)，可更新知识 (更改文档，无需重新训练)，引用来源。",
+        "检索方式: Dense (嵌入 + 余弦相似度)，Sparse (BM25)，Hybrid (结合两者)。",
+        "分块: 将文档分成块 (256-512 tokens)。权衡: 小块 (精确) vs 大块 (上下文)。",
+        "重排序: Cross-encoder 对查询-文档对打分。提高top-k质量。慢但准确。",
+        "挑战: 检索质量瓶颈，提示大小限制，延迟 (检索 + 生成)，成本。"
+    ],
+    proscons_zh: {
+        pros: [
+            "减少幻觉",
+            "可更新知识",
+            "引用来源",
+            "无需重新训练",
+            "可扩展到大型语料库"
+        ],
+        cons: [
+            "检索瓶颈",
+            "延迟开销",
+            "提示大小限制",
+            "质量取决于分块",
+            "成本高 (嵌入 + LLM)"
+        ]
+    }
 };
 nodeDetails.ratelimit = {
     name: "Rate Limit Management",
@@ -2116,7 +2275,36 @@ nodeDetails.react = {
         "Planning",
         "Tool Use",
         "Chain-of-Thought"
-    ]
+    ],
+    name_zh: "ReAct (推理 + 行动)",
+    description_zh: "交替进行推理 (思考) 和行动 (工具使用)。模型生成 思考 → 行动 → 观察 循环直到完成。",
+    keyPoints_zh: [
+        "框架: 思考 (推理步骤) → 行动 (调用工具) → 观察 (工具结果) → 思考 → ... 重复直到任务完成。",
+        "示例: Q: '巴黎的天气如何？' 思考: '我需要查天气'。行动: weather_api('Paris')。观察: '15°C，晴天'。思考: '我有答案了'。答案: '巴黎15°C，晴天'。",
+        "优势: 结合推理 (CoT) 和基础 (工具使用)。减少幻觉 (事实来自工具，非记忆)。对事实性问题更可靠。",
+        "行动空间: 预定义工具 (API，搜索，计算器等)。模型必须选择工具并生成参数。格式: Action: tool_name[arg1, arg2]。",
+        "终止: 模型完成时生成 'Finish[answer]' 行动。或最大迭代限制以防止无限循环。",
+        "提示: 提供工具描述，示例 ReAct 轨迹。模型通过少样本学习格式。关键是显示 思考/行动/观察 结构。",
+        "实现: LangChain，AutoGPT 使用 ReAct 模式。生产系统添加错误处理，重试，行动验证。"
+    ],
+    proscons_zh: {
+        pros: [
+            "减少幻觉",
+            "基于真实数据",
+            "可解释 (看到推理+行动)",
+            "可扩展 (添加工具)",
+            "强实证结果",
+            "行业标准"
+        ],
+        cons: [
+            "较慢 (多次LLM调用)",
+            "依赖工具质量",
+            "脆弱解析 (行动格式)",
+            "可能无限循环",
+            "昂贵 (更多tokens)",
+            "需要良好提示"
+        ]
+    }
 };
 nodeDetails.redteaming = {
     name: "Red Teaming",
@@ -2957,7 +3145,33 @@ nodeDetails.vectordb = {
         "ANN",
         "Chunking",
         "Dense Retrieval"
-    ]
+    ],
+    name_zh: "向量数据库",
+    description_zh: "用于嵌入存储和ANN搜索的专用数据库。Pinecone，Weaviate，Qdrant，Chroma，FAISS。",
+    keyPoints_zh: [
+        "目的: 存储嵌入，快速ANN (近似最近邻) 搜索。O(log n) vs O(n) 暴力搜索。",
+        "FAISS: Facebook。本地库。非常快。无服务器。适合<10M向量。IndexHNSW，IndexIVFPQ。",
+        "Pinecone: 托管云。易用。昂贵。扩展到数十亿。适合生产。",
+        "Weaviate: 开源。混合搜索。GraphQL API。自托管或云。与LangChain集成。",
+        "Qdrant: Rust。快速。支持过滤。开源+云。性价比好。",
+        "Chroma: 嵌入式。SQLite风格。非常适合开发/原型。通过服务器模式用于生产。"
+    ],
+    proscons_zh: {
+        pros: [
+            "FAISS: 快速，免费",
+            "Pinecone: 托管，可扩展",
+            "Weaviate: 混合搜索",
+            "Qdrant: 性能",
+            "Chroma: 易于开发"
+        ],
+        cons: [
+            "FAISS: 无服务器",
+            "Pinecone: 昂贵",
+            "Weaviate: 复杂",
+            "Qdrant: 不太成熟",
+            "Chroma: 非生产规模"
+        ]
+    }
 };
 nodeDetails.versioning = {
     name: "Model Versioning",
