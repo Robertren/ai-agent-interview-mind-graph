@@ -1,21 +1,31 @@
 # AI Agent Director Interview Preparation
 
-> **Complete Interactive Knowledge Graph with 95 Technical Concepts**
+> **Complete Interactive Knowledge Graph with 96 Technical Concepts**
 
-A comprehensive, interactive knowledge graph covering all essential topics for AI Agent Director interviews. Features detailed technical explanations, pros/cons analysis, and implementation code for each concept.
+A comprehensive, bilingual (EN/中文) interactive knowledge graph covering all essential topics for AI Agent Director interviews. Features detailed technical explanations, pros/cons analysis, code examples, and intelligent search.
+
+## 🌐 Live Demo
+
+**Access online:** [https://robertren.github.io/ai-agent-interview-mind-graph/](https://robertren.github.io/ai-agent-interview-mind-graph/)
 
 ![Knowledge Graph Preview](assets/preview.png)
 
 ## 🎯 Features
 
-- **95 Concepts** - Complete coverage of LLM architecture, training, deployment, and agent systems
+### Core Features
+- **96 Concepts** - Complete coverage of LLM architecture, training, deployment, and agent systems
 - **10 Categories** - LLM Core, Multimodal, Memory, Reasoning, RAG, Tools, Production, Safety
 - **Interactive Visualization** - D3.js force-directed graph with zoom, pan, and click exploration
-- **Tier 1 Quality** - Each node includes:
-  - 5-8 detailed technical keypoints
-  - 4-6 pros and cons
-  - 20-150 lines of working code examples
-  - Connections to related concepts
+- **Bilingual Support** - Toggle between English and Chinese (中文) with one click
+- **Intelligent Search** - Real-time keyword search with instant navigation
+- **Code Examples** - 25+ nodes with production-ready Python/JavaScript code
+
+### Content Quality
+Each node includes:
+- 5-8 detailed technical keypoints
+- 4-6 pros and cons with analysis
+- Clickable navigation to related concepts
+- Chinese translations for 60 key nodes (62% coverage)
 
 ## 📁 Structure
 
@@ -36,22 +46,44 @@ ai-agent-director-interview-prep/
 
 ## 🚀 Usage
 
+### Online Access (Recommended)
+
+**Visit:** [https://robertren.github.io/ai-agent-interview-mind-graph/](https://robertren.github.io/ai-agent-interview-mind-graph/)
+
+No setup required! Works on desktop and mobile.
+
 ### Local Development
 
-1. Clone the repository
-2. Open `index.html` in a modern browser (Chrome, Firefox, Safari, Edge)
-3. Click any node to explore details
-4. Use mouse to pan/zoom the graph
-5. Drag nodes to rearrange
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Robertren/ai-agent-interview-mind-graph.git
+   cd ai-agent-interview-mind-graph
+   ```
 
-### GitHub Pages
+2. Open `index.html` in a modern browser
 
-Deploy to GitHub Pages for easy access:
+3. **Interact with the graph:**
+   - 🔍 **Search**: Type in search bar to find concepts
+   - 🌐 **Language**: Click language button to switch EN/中文
+   - 👆 **Click nodes**: View detailed information
+   - 🖱️ **Navigate**: Click "Related Concepts" buttons to jump
+   - 🔎 **Zoom**: Mouse wheel or pinch
+   - 📍 **Pan**: Click and drag background
+   - 🎯 **Move nodes**: Drag individual nodes
 
-```bash
-# In your repository settings, enable GitHub Pages from main branch
-# Access at: https://yourusername.github.io/ai-agent-director-interview-prep/
-```
+### Deploy Your Own
+
+See [GITHUB-PAGES-SETUP.md](GITHUB-PAGES-SETUP.md) for detailed instructions.
+
+## 🌍 Language Support
+
+- **English**: Full coverage for all 96 nodes
+- **中文 (Chinese)**: 60 nodes fully translated (62% coverage)
+  - All major concepts translated
+  - Technical terms preserved (ReAct, LoRA, RAG, etc.)
+  - Covers 90%+ of typical interview topics
+
+Perfect for bilingual technical interviews!
 
 ## 📚 Coverage
 
@@ -107,22 +139,39 @@ Deploy to GitHub Pages for easy access:
 - Jailbreak Defense, Bias Detection
 - Privacy, Red Teaming, Audit Logging
 
-## 🛠️ Build Process
+## ✨ Recent Updates
 
-All nodes were systematically generated with:
-- Technical depth validation
-- Code example testing
-- Pros/cons balanced analysis
-- Industry best practices
-- Production deployment insights
+### March 2026
+- ✅ Added English/Chinese language switcher
+- ✅ Expanded translations to 60 nodes (62% coverage)
+- ✅ Added intelligent search with keyword jump
+- ✅ Implemented clickable navigation buttons
+- ✅ Added 25+ code examples
+- ✅ Fixed all navigation and display issues
+- ✅ Deployed to GitHub Pages
 
-### Merge Process
+## 🎓 How to Use for Interview Prep
 
-```bash
-node merge-all-nodes.js
-```
+### 1. **Explore the Graph**
+   - Start with your weak areas
+   - Follow connections to related topics
+   - Use search to find specific concepts
 
-This merges 6 batch files into a single `complete-nodeDetails-all-95.js` with all node definitions.
+### 2. **Study Each Node**
+   - Read key points thoroughly
+   - Understand pros/cons trade-offs
+   - Review code examples
+   - Practice explaining to others
+
+### 3. **Practice Navigation**
+   - Follow related concepts
+   - Build mental connections
+   - Understand relationships
+
+### 4. **Switch Languages**
+   - Practice explaining in both languages
+   - Test bilingual technical communication
+   - Prepare for Chinese interviews
 
 ## 📖 Study Guide
 
@@ -170,12 +219,46 @@ Built with:
 - OpenAI GPT-4 for content generation
 - Community best practices and research papers
 
+## 📖 Documentation
+
+- [GITHUB-PAGES-SETUP.md](GITHUB-PAGES-SETUP.md) - How to deploy your own
+- [LANGUAGE-SWITCHER.md](LANGUAGE-SWITCHER.md) - Language feature details
+- [TRANSLATION-SUMMARY.md](TRANSLATION-SUMMARY.md) - Translation coverage
+- [HOW-TO-SEE-FEATURES.md](HOW-TO-SEE-FEATURES.md) - Troubleshooting guide
+- [DEBUG-GUIDE.md](DEBUG-GUIDE.md) - Technical debugging
+
+## 📊 Stats
+
+- **Total Nodes**: 96
+- **Total Links**: 140+
+- **Code Examples**: 25+ nodes
+- **Chinese Translations**: 60 nodes (62%)
+- **Lines of Code**: ~1,100 in index.html
+- **Data Size**: ~200KB total
+- **Load Time**: <1 second
+
+## 🔗 Links
+
+- **Live Demo**: [https://robertren.github.io/ai-agent-interview-mind-graph/](https://robertren.github.io/ai-agent-interview-mind-graph/)
+- **Repository**: [https://github.com/Robertren/ai-agent-interview-mind-graph](https://github.com/Robertren/ai-agent-interview-mind-graph)
+- **Issues**: [Report bugs or suggestions](https://github.com/Robertren/ai-agent-interview-mind-graph/issues)
+
 ## 📧 Contact
 
-For questions or suggestions, open an issue on GitHub.
+For questions or suggestions, [open an issue](https://github.com/Robertren/ai-agent-interview-mind-graph/issues) on GitHub.
 
 ---
 
+## 🎉 You're Ready!
+
+This comprehensive knowledge graph covers everything you need for an AI Agent Director interview. Use it to:
+- ✅ Learn 96 essential concepts
+- ✅ Understand relationships between topics
+- ✅ Practice with code examples
+- ✅ Prepare in English or Chinese
+- ✅ Quick reference during prep
+
 **Good luck with your AI Agent Director interview!** 🚀
 
-*Last updated: March 27, 2026*
+*Last updated: March 28, 2026*
+*Version: 2.0 with Bilingual Support*
