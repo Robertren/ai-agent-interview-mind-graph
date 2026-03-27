@@ -5,7 +5,33 @@
 
 const nodeDetails = {};
 
-nodeDetails.agentbench = {name: "Agent Benchmarks", description: "Agent-specific: WebArena, AgentBench for tool use, multi-step reasoning.", details: {keyPoints: ["WebArena: Web navigation tasks. 800+ real-world scenarios", "AgentBench: Multi-domain (code, game, web). Tool use + planning", "ToolBench: 16K+ APIs. Function calling evaluation", "Success rate: % of tasks completed correctly"], proscons: {pros: ["Real-world tasks", "Multi-step", "Tool use"], cons: ["Hard to run (need envs)", "Subjective success", "Expensive"]}}};
+nodeDetails.agentbench = {
+    name: "Agent Benchmarks",
+    description: "Agent-specific: WebArena, AgentBench for tool use, multi-step reasoning.",
+    details: {
+        keyPoints: [
+            "WebArena: Web navigation tasks. 800+ real-world scenarios",
+            "AgentBench: Multi-domain (code, game, web). Tool use + planning",
+            "ToolBench: 16K+ APIs. Function calling evaluation",
+            "Success rate: % of tasks completed correctly"
+        ],
+        proscons: {
+            pros: [
+                "Real-world tasks",
+                "Multi-step",
+                "Tool use"
+            ],
+            cons: [
+                "Hard to run (need envs)",
+                "Subjective success",
+                "Expensive"
+            ]
+        }
+    },
+    connections: [
+        "Benchmarks"
+    ]
+};
 nodeDetails.agentframeworks = {
     name: "Agent Frameworks",
     description: "LangChain, AutoGPT, CrewAI, MetaGPT - production frameworks for building LLM agents.",
@@ -19,12 +45,57 @@ nodeDetails.agentframeworks = {
             "Comparison: LangChain (flexible), AutoGPT (autonomous), CrewAI (team-oriented), MetaGPT (software-specific)."
         ],
         proscons: {
-            pros: ["LangChain: Ecosystem", "AutoGPT: Autonomous", "CrewAI: Team structure", "MetaGPT: Code quality", "All: Production-ready"],
-            cons: ["LangChain: Complexity", "AutoGPT: Loops", "CrewAI: Learning curve", "MetaGPT: Domain-specific", "All: Cost"]
+            pros: [
+                "LangChain: Ecosystem",
+                "AutoGPT: Autonomous",
+                "CrewAI: Team structure",
+                "MetaGPT: Code quality",
+                "All: Production-ready"
+            ],
+            cons: [
+                "LangChain: Complexity",
+                "AutoGPT: Loops",
+                "CrewAI: Learning curve",
+                "MetaGPT: Domain-specific",
+                "All: Cost"
+            ]
         }
-    }
+    },
+    connections: [
+        "Multi-Agent",
+        "LangChain",
+        "CrewAI"
+    ]
 };
-nodeDetails.alignment = {name: "Alignment", description: "RLHF, DPO to align models with human preferences (helpful, harmless, honest).", details: {keyPoints: ["RLHF: Train reward model on human preferences, optimize with PPO", "DPO: Direct preference optimization. Simpler than RLHF", "Constitutional AI: Model critiques itself, improves iteratively", "Goals: Helpfulness, harmlessness, honesty (HHH)"], proscons: {pros: ["Better behavior", "Reduces toxicity", "Follows instructions"], cons: ["Expensive (human labels)", "Sycophancy risk", "Reduces capability"]}}};
+nodeDetails.alignment = {
+    name: "Alignment",
+    description: "RLHF, DPO to align models with human preferences (helpful, harmless, honest).",
+    details: {
+        keyPoints: [
+            "RLHF: Train reward model on human preferences, optimize with PPO",
+            "DPO: Direct preference optimization. Simpler than RLHF",
+            "Constitutional AI: Model critiques itself, improves iteratively",
+            "Goals: Helpfulness, harmlessness, honesty (HHH)"
+        ],
+        proscons: {
+            pros: [
+                "Better behavior",
+                "Reduces toxicity",
+                "Follows instructions"
+            ],
+            cons: [
+                "Expensive (human labels)",
+                "Sycophancy risk",
+                "Reduces capability"
+            ]
+        }
+    },
+    connections: [
+        "RLHF",
+        "Safety",
+        "DPO"
+    ]
+};
 nodeDetails.ann = {
     name: "Approximate Nearest Neighbor",
     description: "Fast similarity search via HNSW, IVF, PQ. Trade accuracy for speed. O(log n) vs O(n).",
@@ -38,12 +109,55 @@ nodeDetails.ann = {
             "Parameters: HNSW ef_construction (build quality), ef_search (query quality). IVF nlist (clusters), nprobe (clusters searched)."
         ],
         proscons: {
-            pros: ["HNSW: Best accuracy-speed", "IVF: Very fast", "PQ: Memory-efficient", "All: Enable billion-scale", "Production-proven"],
-            cons: ["HNSW: Memory-heavy", "IVF: Tuning needed", "PQ: Quality loss", "All: Approximate (not exact)", "Building index slow"]
+            pros: [
+                "HNSW: Best accuracy-speed",
+                "IVF: Very fast",
+                "PQ: Memory-efficient",
+                "All: Enable billion-scale",
+                "Production-proven"
+            ],
+            cons: [
+                "HNSW: Memory-heavy",
+                "IVF: Tuning needed",
+                "PQ: Quality loss",
+                "All: Approximate (not exact)",
+                "Building index slow"
+            ]
         }
-    }
+    },
+    connections: [
+        "Vector DB"
+    ]
 };
-nodeDetails.apicalling = {name: "API Calling", description: "Agents call REST APIs, GraphQL for external services integration.", details: {keyPoints: ["REST: HTTP methods (GET, POST, PUT, DELETE)", "Authentication: API keys, OAuth, JWT", "Error handling: Retry on 5xx, rate limit 429", "Schema: OpenAPI/Swagger for tool descriptions"], proscons: {pros: ["Standard protocol", "Wide ecosystem", "Well-documented"], cons: ["Network latency", "Rate limits", "Authentication complexity"]}}};
+nodeDetails.apicalling = {
+    name: "API Calling",
+    description: "Agents call REST APIs, GraphQL for external services integration.",
+    details: {
+        keyPoints: [
+            "REST: HTTP methods (GET, POST, PUT, DELETE)",
+            "Authentication: API keys, OAuth, JWT",
+            "Error handling: Retry on 5xx, rate limit 429",
+            "Schema: OpenAPI/Swagger for tool descriptions"
+        ],
+        proscons: {
+            pros: [
+                "Standard protocol",
+                "Wide ecosystem",
+                "Well-documented"
+            ],
+            cons: [
+                "Network latency",
+                "Rate limits",
+                "Authentication complexity"
+            ]
+        }
+    },
+    connections: [
+        "Tool Use",
+        "Error Handling",
+        "Rate Limiting"
+    ]
+};
 nodeDetails.attention = {
     name: "Multi-Head Attention",
     description: "Core mechanism allowing models to focus on different parts of input simultaneously using multiple learned patterns.",
@@ -76,13 +190,155 @@ nodeDetails.attention = {
             ]
         }
     },
-    connections: ["Transformer", "Long Context", "Inference Optimization", "Flash Attention"]
+    connections: [
+        "Transformer",
+        "Long Context",
+        "Inference Optimization",
+        "Flash Attention"
+    ]
 };
-nodeDetails.audioprocess = {name: "Audio Processing", description: "Process audio for LLMs: speech-to-text (Whisper), audio embeddings, voice cloning.", details: {keyPoints: ["Speech-to-Text: Whisper converts speech → text", "Audio embeddings: CLAP (audio CLIP)", "Text-to-Speech: Voice generation (ElevenLabs, Bark)", "Audio tokens: AudioLM, MusicLM"], proscons: {pros: ["Natural voice interfaces", "Accessibility", "Multilingual support"], cons: ["Privacy (voice identification)", "Accent/dialect bias", "Background noise issues", "Voice cloning misuse"]}}};
-nodeDetails.auditlog = {name: "Audit Logging", description: "Log all requests, responses for compliance, debugging, safety.", details: {keyPoints: ["Logs: Timestamp, user, prompt, response, model version", "Retention: 30-90 days (GDPR compliance)", "Privacy: Hash PII, encrypt logs", "Use cases: Debugging, compliance audits, safety monitoring"], proscons: {pros: ["Compliance", "Debugging", "Accountability"], cons: ["Privacy risk", "Storage cost", "Access control"]}}};
-nodeDetails.batching = {name: "Request Batching", description: "Group multiple requests for efficiency. Static vs continuous batching.", details: {keyPoints: ["Static: Wait for batch to fill, process together. High latency", "Continuous (vLLM): Add requests as they arrive. Low latency, high throughput", "Benefits: Better GPU utilization, lower cost per request", "Trade-off: Latency (static) vs complexity (continuous)"], proscons: {pros: ["Higher throughput", "Lower cost", "Better GPU utilization"], cons: ["Latency increase (static)", "Implementation complexity", "Coordination overhead"]}}};
-nodeDetails.benchmarks = {name: "LLM Benchmarks", description: "MMLU, HumanEval, MT-Bench, etc. for standardized evaluation.", details: {keyPoints: ["MMLU: 57 subjects, multiple choice. Tests broad knowledge", "HumanEval: Code generation. 164 Python problems", "MT-Bench: Multi-turn conversation. GPT-4 as judge", "GSM8K: Math word problems. Tests reasoning"], proscons: {pros: ["Standardized", "Reproducible", "Easy comparison"], cons: ["Narrow tasks", "Gameable", "Not real-world"]}}};
-nodeDetails.bias = {name: "Bias Detection", description: "Identify and mitigate gender, racial, cultural biases in model outputs.", details: {keyPoints: ["Metrics: Equalized odds, demographic parity", "Detection: Test on diverse prompts, measure disparities", "Mitigation: Data balancing, debiasing techniques", "Trade-offs: Bias vs capability (can reduce quality)"], proscons: {pros: ["Fairness", "Compliance", "Trust"], cons: ["Hard to measure", "Trade-offs", "Incomplete solutions"]}}};
+nodeDetails.audioprocess = {
+    name: "Audio Processing",
+    description: "Process audio for LLMs: speech-to-text (Whisper), audio embeddings, voice cloning.",
+    details: {
+        keyPoints: [
+            "Speech-to-Text: Whisper converts speech → text",
+            "Audio embeddings: CLAP (audio CLIP)",
+            "Text-to-Speech: Voice generation (ElevenLabs, Bark)",
+            "Audio tokens: AudioLM, MusicLM"
+        ],
+        proscons: {
+            pros: [
+                "Natural voice interfaces",
+                "Accessibility",
+                "Multilingual support"
+            ],
+            cons: [
+                "Privacy (voice identification)",
+                "Accent/dialect bias",
+                "Background noise issues",
+                "Voice cloning misuse"
+            ]
+        }
+    },
+    connections: [
+        "Multimodal"
+    ]
+};
+nodeDetails.auditlog = {
+    name: "Audit Logging",
+    description: "Log all requests, responses for compliance, debugging, safety.",
+    details: {
+        keyPoints: [
+            "Logs: Timestamp, user, prompt, response, model version",
+            "Retention: 30-90 days (GDPR compliance)",
+            "Privacy: Hash PII, encrypt logs",
+            "Use cases: Debugging, compliance audits, safety monitoring"
+        ],
+        proscons: {
+            pros: [
+                "Compliance",
+                "Debugging",
+                "Accountability"
+            ],
+            cons: [
+                "Privacy risk",
+                "Storage cost",
+                "Access control"
+            ]
+        }
+    },
+    connections: [
+        "Safety",
+        "Monitoring"
+    ]
+};
+nodeDetails.batching = {
+    name: "Request Batching",
+    description: "Group multiple requests for efficiency. Static vs continuous batching.",
+    details: {
+        keyPoints: [
+            "Static: Wait for batch to fill, process together. High latency",
+            "Continuous (vLLM): Add requests as they arrive. Low latency, high throughput",
+            "Benefits: Better GPU utilization, lower cost per request",
+            "Trade-off: Latency (static) vs complexity (continuous)"
+        ],
+        proscons: {
+            pros: [
+                "Higher throughput",
+                "Lower cost",
+                "Better GPU utilization"
+            ],
+            cons: [
+                "Latency increase (static)",
+                "Implementation complexity",
+                "Coordination overhead"
+            ]
+        }
+    },
+    connections: [
+        "Inference",
+        "Serving"
+    ]
+};
+nodeDetails.benchmarks = {
+    name: "LLM Benchmarks",
+    description: "MMLU, HumanEval, MT-Bench, etc. for standardized evaluation.",
+    details: {
+        keyPoints: [
+            "MMLU: 57 subjects, multiple choice. Tests broad knowledge",
+            "HumanEval: Code generation. 164 Python problems",
+            "MT-Bench: Multi-turn conversation. GPT-4 as judge",
+            "GSM8K: Math word problems. Tests reasoning"
+        ],
+        proscons: {
+            pros: [
+                "Standardized",
+                "Reproducible",
+                "Easy comparison"
+            ],
+            cons: [
+                "Narrow tasks",
+                "Gameable",
+                "Not real-world"
+            ]
+        }
+    },
+    connections: [
+        "Evaluation",
+        "AgentBench / WebArena",
+        "MMLU / HellaSwag",
+        "MT-Bench / Arena"
+    ]
+};
+nodeDetails.bias = {
+    name: "Bias Detection",
+    description: "Identify and mitigate gender, racial, cultural biases in model outputs.",
+    details: {
+        keyPoints: [
+            "Metrics: Equalized odds, demographic parity",
+            "Detection: Test on diverse prompts, measure disparities",
+            "Mitigation: Data balancing, debiasing techniques",
+            "Trade-offs: Bias vs capability (can reduce quality)"
+        ],
+        proscons: {
+            pros: [
+                "Fairness",
+                "Compliance",
+                "Trust"
+            ],
+            cons: [
+                "Hard to measure",
+                "Trade-offs",
+                "Incomplete solutions"
+            ]
+        }
+    },
+    connections: [
+        "Safety",
+        "Evaluation"
+    ]
+};
 nodeDetails.bpe = {
     name: "Byte Pair Encoding (BPE)",
     description: "Iteratively merge most frequent adjacent character pairs to build subword vocabulary, used in GPT-2/3/4.",
@@ -115,9 +371,41 @@ nodeDetails.bpe = {
             ]
         }
     },
-    connections: ["Tokenization", "GPT-2", "Subword Units", "Vocabulary"]
+    connections: [
+        "Tokenization",
+        "GPT-2",
+        "Subword Units",
+        "Vocabulary"
+    ]
 };
-nodeDetails.caching = {name: "Response Caching", description: "Cache LLM responses, embeddings to reduce cost and latency.", details: {keyPoints: ["Prompt caching: Cache common prefix (system prompt). 50-90% cost reduction", "Response caching: Cache identical queries. Risk: stale data", "Embedding caching: Cache doc embeddings. One-time cost", "TTL: Expire cache after time to ensure freshness"], proscons: {pros: ["Huge cost savings", "Faster responses", "Lower load"], cons: ["Stale data risk", "Cache invalidation complexity", "Storage cost"]}}};
+nodeDetails.caching = {
+    name: "Response Caching",
+    description: "Cache LLM responses, embeddings to reduce cost and latency.",
+    details: {
+        keyPoints: [
+            "Prompt caching: Cache common prefix (system prompt). 50-90% cost reduction",
+            "Response caching: Cache identical queries. Risk: stale data",
+            "Embedding caching: Cache doc embeddings. One-time cost",
+            "TTL: Expire cache after time to ensure freshness"
+        ],
+        proscons: {
+            pros: [
+                "Huge cost savings",
+                "Faster responses",
+                "Lower load"
+            ],
+            cons: [
+                "Stale data risk",
+                "Cache invalidation complexity",
+                "Storage cost"
+            ]
+        }
+    },
+    connections: [
+        "Serving",
+        "Cost Management"
+    ]
+};
 nodeDetails.chunking = {
     name: "Text Chunking",
     description: "Split docs into chunks for embedding. Fixed-size, semantic, recursive. Trade-off: precision vs context.",
@@ -131,13 +419,84 @@ nodeDetails.chunking = {
             "Size tuning: 256 tokens (precise, many chunks), 512 (balanced), 1024 (context-rich, fewer chunks)."
         ],
         proscons: {
-            pros: ["Fixed: Fast, simple", "Recursive: Structure preserved", "Semantic: Best quality", "Overlap: No boundary issues", "Metadata: Better ranking"],
-            cons: ["Fixed: Breaks sentences", "Recursive: Complex", "Semantic: Slow", "Overlap: More chunks", "All: Tuning needed"]
+            pros: [
+                "Fixed: Fast, simple",
+                "Recursive: Structure preserved",
+                "Semantic: Best quality",
+                "Overlap: No boundary issues",
+                "Metadata: Better ranking"
+            ],
+            cons: [
+                "Fixed: Breaks sentences",
+                "Recursive: Complex",
+                "Semantic: Slow",
+                "Overlap: More chunks",
+                "All: Tuning needed"
+            ]
         }
-    }
+    },
+    connections: [
+        "Vector DB",
+        "RAG"
+    ]
 };
-nodeDetails.clip = {name: "CLIP", description: "Contrastive Language-Image Pre-training. Learns joint embedding space for images and text.", details: {keyPoints: ["Contrastive learning on 400M image-text pairs", "Zero-shot image classification", "Foundation for DALL-E/Stable Diffusion", "Image search via text queries"], proscons: {pros: ["Zero-shot transfer", "No labeled images needed", "Unified vision-language space"], cons: ["Requires 400M+ paired data", "Weak at fine details", "Inherits dataset biases"]}}};
-nodeDetails.codeexec = {name: "Code Execution", description: "Sandboxed Python/JS execution for calculations, data processing.", details: {keyPoints: ["Sandbox: Docker, Firecracker, E2B for isolation", "Timeout: Kill long-running code (5-30s)", "Resource limits: CPU, memory caps", "Use cases: Math, data analysis, scripting"], proscons: {pros: ["Powerful", "Deterministic", "Complex operations"], cons: ["Security risk", "Resource intensive", "Debugging hard"]}}};
+nodeDetails.clip = {
+    name: "CLIP",
+    description: "Contrastive Language-Image Pre-training. Learns joint embedding space for images and text.",
+    details: {
+        keyPoints: [
+            "Contrastive learning on 400M image-text pairs",
+            "Zero-shot image classification",
+            "Foundation for DALL-E/Stable Diffusion",
+            "Image search via text queries"
+        ],
+        proscons: {
+            pros: [
+                "Zero-shot transfer",
+                "No labeled images needed",
+                "Unified vision-language space"
+            ],
+            cons: [
+                "Requires 400M+ paired data",
+                "Weak at fine details",
+                "Inherits dataset biases"
+            ]
+        }
+    },
+    connections: [
+        "Multimodal",
+        "Embeddings",
+        "Image-Text Encoders"
+    ]
+};
+nodeDetails.codeexec = {
+    name: "Code Execution",
+    description: "Sandboxed Python/JS execution for calculations, data processing.",
+    details: {
+        keyPoints: [
+            "Sandbox: Docker, Firecracker, E2B for isolation",
+            "Timeout: Kill long-running code (5-30s)",
+            "Resource limits: CPU, memory caps",
+            "Use cases: Math, data analysis, scripting"
+        ],
+        proscons: {
+            pros: [
+                "Powerful",
+                "Deterministic",
+                "Complex operations"
+            ],
+            cons: [
+                "Security risk",
+                "Resource intensive",
+                "Debugging hard"
+            ]
+        }
+    },
+    connections: [
+        "Tool Use",
+        "Sandboxing"
+    ]
+};
 nodeDetails.communication = {
     name: "Agent Communication",
     description: "Message passing, shared memory, publish-subscribe patterns for agent coordination.",
@@ -151,13 +510,83 @@ nodeDetails.communication = {
             "Priority: Urgent messages processed first. Critical for time-sensitive coordination."
         ],
         proscons: {
-            pros: ["Direct: Simple", "Blackboard: Decoupled", "Pub-sub: Scalable", "JSON: Readable", "Acks: Reliable"],
-            cons: ["Direct: Tight coupling", "Blackboard: Race conditions", "Pub-sub: Overhead", "NL: Parsing errors", "Retries: Complexity"]
+            pros: [
+                "Direct: Simple",
+                "Blackboard: Decoupled",
+                "Pub-sub: Scalable",
+                "JSON: Readable",
+                "Acks: Reliable"
+            ],
+            cons: [
+                "Direct: Tight coupling",
+                "Blackboard: Race conditions",
+                "Pub-sub: Overhead",
+                "NL: Parsing errors",
+                "Retries: Complexity"
+            ]
         }
-    }
+    },
+    connections: [
+        "Multi-Agent"
+    ]
 };
-nodeDetails.contextmgmt = {name: "Context Management", description: "Manage context window: summarization, selective attention, hierarchical compression.", details: {keyPoints: ["Summarization: Compress old conversations → summaries", "Sliding window: Keep recent N tokens, discard old", "Hierarchical: Summary pyramid (detailed recent, compressed old)", "Selective: Retrieve only relevant past context"], proscons: {pros: ["Extend effective memory", "Control token usage", "Reduce cost"], cons: ["Lossy compression", "Summarization errors", "Complexity"]}}};
-nodeDetails.convsummarization = {name: "Conversation Summarization", description: "Compress long conversations for efficient context management.", details: {keyPoints: ["Progressive: Summarize after every N turns", "LLM-based: 'Summarize this conversation'", "Extractive vs abstractive", "Multi-level: Keep detailed recent + compressed old"], proscons: {pros: ["Compress 10x-100x", "Maintain key points", "Reduce cost"], cons: ["Information loss", "Summarization cost", "Quality varies"]}}};
+nodeDetails.contextmgmt = {
+    name: "Context Management",
+    description: "Manage context window: summarization, selective attention, hierarchical compression.",
+    details: {
+        keyPoints: [
+            "Summarization: Compress old conversations → summaries",
+            "Sliding window: Keep recent N tokens, discard old",
+            "Hierarchical: Summary pyramid (detailed recent, compressed old)",
+            "Selective: Retrieve only relevant past context"
+        ],
+        proscons: {
+            pros: [
+                "Extend effective memory",
+                "Control token usage",
+                "Reduce cost"
+            ],
+            cons: [
+                "Lossy compression",
+                "Summarization errors",
+                "Complexity"
+            ]
+        }
+    },
+    connections: [
+        "Memory",
+        "Conversation Summarization",
+        "Long Context"
+    ]
+};
+nodeDetails.convsummarization = {
+    name: "Conversation Summarization",
+    description: "Compress long conversations for efficient context management.",
+    details: {
+        keyPoints: [
+            "Progressive: Summarize after every N turns",
+            "LLM-based: 'Summarize this conversation'",
+            "Extractive vs abstractive",
+            "Multi-level: Keep detailed recent + compressed old"
+        ],
+        proscons: {
+            pros: [
+                "Compress 10x-100x",
+                "Maintain key points",
+                "Reduce cost"
+            ],
+            cons: [
+                "Information loss",
+                "Summarization cost",
+                "Quality varies"
+            ]
+        }
+    },
+    connections: [
+        "Context Window Management",
+        "Episodic Memory"
+    ]
+};
 nodeDetails.coordination = {
     name: "Agent Coordination",
     description: "Patterns for multi-agent collaboration: supervisor-worker, peer-to-peer, blackboard, negotiation.",
@@ -171,12 +600,56 @@ nodeDetails.coordination = {
             "Use cases: Supervisor for simple decomposition. Peer for debate/consensus. Blackboard for document editing. Hierarchical for large projects."
         ],
         proscons: {
-            pros: ["Supervisor: simple", "Peer: flexible", "Blackboard: async", "Hierarchical: scalable", "Negotiation: handles conflicts"],
-            cons: ["Supervisor: bottleneck", "Peer: complex protocol", "Blackboard: race conditions", "Hierarchical: overhead", "Negotiation: slow convergence"]
+            pros: [
+                "Supervisor: simple",
+                "Peer: flexible",
+                "Blackboard: async",
+                "Hierarchical: scalable",
+                "Negotiation: handles conflicts"
+            ],
+            cons: [
+                "Supervisor: bottleneck",
+                "Peer: complex protocol",
+                "Blackboard: race conditions",
+                "Hierarchical: overhead",
+                "Negotiation: slow convergence"
+            ]
         }
-    }
+    },
+    connections: [
+        "Multi-Agent"
+    ]
 };
-nodeDetails.costmgmt = {name: "Cost Management", description: "Optimize spend: prompt caching, model routing, batch requests.", details: {keyPoints: ["Prompt caching: 50-90% savings on repeated prefixes", "Model routing: Cheap model for simple, expensive for hard", "Batch requests: Process multiple at once for discounts", "Monitoring: Track cost per request, set budgets"], proscons: {pros: ["Reduce spend", "Optimize ROI", "Predictable costs"], cons: ["Complexity", "Quality trade-offs", "Monitoring overhead"]}}};
+nodeDetails.costmgmt = {
+    name: "Cost Management",
+    description: "Optimize spend: prompt caching, model routing, batch requests.",
+    details: {
+        keyPoints: [
+            "Prompt caching: 50-90% savings on repeated prefixes",
+            "Model routing: Cheap model for simple, expensive for hard",
+            "Batch requests: Process multiple at once for discounts",
+            "Monitoring: Track cost per request, set budgets"
+        ],
+        proscons: {
+            pros: [
+                "Reduce spend",
+                "Optimize ROI",
+                "Predictable costs"
+            ],
+            cons: [
+                "Complexity",
+                "Quality trade-offs",
+                "Monitoring overhead"
+            ]
+        }
+    },
+    connections: [
+        "Production",
+        "Model Routing",
+        "Caching",
+        "Quantization"
+    ]
+};
 nodeDetails.cot = {
     name: "Chain-of-Thought (CoT)",
     description: "Prompt model to show reasoning steps. 'Let's think step by step.' Improves math, logic, complex tasks.",
@@ -191,10 +664,30 @@ nodeDetails.cot = {
             "Least-to-most prompting: Break problem into subproblems, solve sequentially. More structured than CoT. Better for compositional tasks."
         ],
         proscons: {
-            pros: ["Dramatic accuracy gains (20-50%)", "Interpretable (see reasoning)", "Robust across models", "Simple to implement", "Works zero-shot", "Essential for complex tasks"],
-            cons: ["2-5x token overhead (expensive)", "Can hallucinate reasoning", "Doesn't help simple tasks", "Slower inference", "Requires large models", "Not always faithful (post-hoc rationalization)"]
+            pros: [
+                "Dramatic accuracy gains (20-50%)",
+                "Interpretable (see reasoning)",
+                "Robust across models",
+                "Simple to implement",
+                "Works zero-shot",
+                "Essential for complex tasks"
+            ],
+            cons: [
+                "2-5x token overhead (expensive)",
+                "Can hallucinate reasoning",
+                "Doesn't help simple tasks",
+                "Slower inference",
+                "Requires large models",
+                "Not always faithful (post-hoc rationalization)"
+            ]
         }
-    }
+    },
+    connections: [
+        "Planning",
+        "ReAct",
+        "Tree-of-Thoughts",
+        "Prompting"
+    ]
 };
 nodeDetails.crewai = {
     name: "CrewAI & MetaGPT",
@@ -209,10 +702,25 @@ nodeDetails.crewai = {
             "Output quality: Better than single-agent for complex tasks. Role specialization improves quality."
         ],
         proscons: {
-            pros: ["CrewAI: Team clarity", "MetaGPT: Code quality", "Role specialization", "Structured workflows", "Production-ready"],
-            cons: ["Expensive (multiple LLM calls)", "Setup complexity", "MetaGPT domain-specific", "Coordination overhead", "Can conflict"]
+            pros: [
+                "CrewAI: Team clarity",
+                "MetaGPT: Code quality",
+                "Role specialization",
+                "Structured workflows",
+                "Production-ready"
+            ],
+            cons: [
+                "Expensive (multiple LLM calls)",
+                "Setup complexity",
+                "MetaGPT domain-specific",
+                "Coordination overhead",
+                "Can conflict"
+            ]
         }
-    }
+    },
+    connections: [
+        "Agent Frameworks"
+    ]
 };
 nodeDetails.decoding = {
     name: "Decoding Strategies",
@@ -228,10 +736,29 @@ nodeDetails.decoding = {
             "Min-p, Typical Sampling: Advanced variants. Min-p: threshold scaled by max prob. Typical: sample tokens close to 'typical' info content. Less common but sometimes better quality."
         ],
         proscons: {
-            pros: ["Greedy: Fast, deterministic, reproducible", "Beam: Better quality than greedy, still deterministic", "Sampling: Diverse outputs, creative", "Top-p: Adaptive vocabulary size", "Top-k: Simple, effective", "Combinations work well"],
-            cons: ["Greedy: Repetitive, low quality", "Beam: Computationally expensive (k× slower)", "Temperature: Hard to tune per task", "Top-p: Can still repeat", "All: Require hyperparameter tuning", "No guarantee of factual correctness"]
+            pros: [
+                "Greedy: Fast, deterministic, reproducible",
+                "Beam: Better quality than greedy, still deterministic",
+                "Sampling: Diverse outputs, creative",
+                "Top-p: Adaptive vocabulary size",
+                "Top-k: Simple, effective",
+                "Combinations work well"
+            ],
+            cons: [
+                "Greedy: Repetitive, low quality",
+                "Beam: Computationally expensive (k× slower)",
+                "Temperature: Hard to tune per task",
+                "Top-p: Can still repeat",
+                "All: Require hyperparameter tuning",
+                "No guarantee of factual correctness"
+            ]
         }
-    }
+    },
+    connections: [
+        "Inference",
+        "Sampling",
+        "Speculative Decoding"
+    ]
 };
 nodeDetails.dense = {
     name: "Dense Retrieval",
@@ -246,10 +773,28 @@ nodeDetails.dense = {
             "Fine-tuning: Train embeddings on domain data (contrastive learning). Improves relevance."
         ],
         proscons: {
-            pros: ["Semantic matching", "Fast retrieval (ANN)", "Handles synonyms/paraphrases", "SOTA quality", "Multilingual"],
-            cons: ["Requires embeddings (cost)", "Exact keyword match can fail", "Needs tuning", "Storage overhead", "Cold start problem"]
+            pros: [
+                "Semantic matching",
+                "Fast retrieval (ANN)",
+                "Handles synonyms/paraphrases",
+                "SOTA quality",
+                "Multilingual"
+            ],
+            cons: [
+                "Requires embeddings (cost)",
+                "Exact keyword match can fail",
+                "Needs tuning",
+                "Storage overhead",
+                "Cold start problem"
+            ]
         }
-    }
+    },
+    connections: [
+        "RAG",
+        "Embeddings",
+        "Vector DB",
+        "Hybrid Retrieval"
+    ]
 };
 nodeDetails.distillation = {
     name: "Knowledge Distillation",
@@ -283,7 +828,12 @@ nodeDetails.distillation = {
             ]
         }
     },
-    connections: ["Model Compression", "SFT", "Alpaca", "Constitutional AI"]
+    connections: [
+        "Model Compression",
+        "SFT",
+        "Alpaca",
+        "Constitutional AI"
+    ]
 };
 nodeDetails.distributed = {
     name: "Distributed Training",
@@ -318,9 +868,44 @@ nodeDetails.distributed = {
             ]
         }
     },
-    connections: ["Pre-training", "Scaling Laws", "ZeRO", "FSDP", "Megatron"]
+    connections: [
+        "Pre-training",
+        "Scaling Laws",
+        "ZeRO",
+        "FSDP",
+        "Megatron"
+    ]
 };
-nodeDetails.dpo = {name: "DPO", description: "Direct Preference Optimization. Simpler than RLHF, no reward model needed.", details: {keyPoints: ["Direct: Optimize on preference pairs (chosen, rejected)", "Loss: -log σ(β log π_θ(y_w|x) / π_ref(y_w|x) - β log π_θ(y_l|x) / π_ref(y_l|x))", "Benefits: Simpler, faster, more stable than RLHF", "Quality: Similar to RLHF on many tasks"], proscons: {pros: ["Simpler than RLHF", "No reward model", "Faster training", "More stable"], cons: ["Still needs human preferences", "Less flexible", "Newer (less proven)"]}}};
+nodeDetails.dpo = {
+    name: "DPO",
+    description: "Direct Preference Optimization. Simpler than RLHF, no reward model needed.",
+    details: {
+        keyPoints: [
+            "Direct: Optimize on preference pairs (chosen, rejected)",
+            "Loss: -log σ(β log π_θ(y_w|x) / π_ref(y_w|x) - β log π_θ(y_l|x) / π_ref(y_l|x))",
+            "Benefits: Simpler, faster, more stable than RLHF",
+            "Quality: Similar to RLHF on many tasks"
+        ],
+        proscons: {
+            pros: [
+                "Simpler than RLHF",
+                "No reward model",
+                "Faster training",
+                "More stable"
+            ],
+            cons: [
+                "Still needs human preferences",
+                "Less flexible",
+                "Newer (less proven)"
+            ]
+        }
+    },
+    connections: [
+        "SFT",
+        "RLHF",
+        "Alignment"
+    ]
+};
 nodeDetails.embeddings = {
     name: "Embedding Models",
     description: "Convert text to dense vectors. sentence-transformers, OpenAI, Cohere. Fine-tune for domain.",
@@ -334,14 +919,114 @@ nodeDetails.embeddings = {
             "Multilingual: paraphrase-multilingual, LaBSE. Work across 50+ languages. Slight quality drop vs monolingual."
         ],
         proscons: {
-            pros: ["Semantic similarity", "Pre-trained available", "Fine-tunable", "Multilingual support", "Production-ready"],
-            cons: ["Dimension curse (1536d = large storage)", "Inference cost", "Domain mismatch if not fine-tuned", "Cold start", "Opaque"]
+            pros: [
+                "Semantic similarity",
+                "Pre-trained available",
+                "Fine-tunable",
+                "Multilingual support",
+                "Production-ready"
+            ],
+            cons: [
+                "Dimension curse (1536d = large storage)",
+                "Inference cost",
+                "Domain mismatch if not fine-tuned",
+                "Cold start",
+                "Opaque"
+            ]
         }
-    }
+    },
+    connections: [
+        "CLIP",
+        "Vector DB",
+        "Transformer",
+        "Dense Retrieval"
+    ]
 };
-nodeDetails.episodic = {name: "Episodic Memory", description: "Store event sequences (conversations, actions). Retrieve by time/context.", details: {keyPoints: ["Timeline-based: Events in chronological order", "Context tags: Conversation ID, session, user", "Retrieval: Query by time range, context, or semantic similarity", "Use cases: Multi-turn chat, debugging agent behavior, personalization"], proscons: {pros: ["Natural for conversations", "Time-based queries", "Complete history"], cons: ["Storage grows unbounded", "Retrieval can be slow", "Privacy concerns"]}}};
-nodeDetails.errorhandling = {name: "Error Handling", description: "Retry logic, fallbacks, error messages for robust agents.", details: {keyPoints: ["Retry: Exponential backoff (1s, 2s, 4s)", "Fallback: Alternative tool or simplified request", "Error messages: Human-readable, actionable", "Circuit breaker: Stop retrying after N failures"], proscons: {pros: ["Robustness", "User-friendly", "Prevents cascading failures"], cons: ["Latency overhead", "Complexity", "Cost of retries"]}}};
-nodeDetails.evaluation = {name: "LLM Evaluation", description: "Measure quality: benchmarks, human eval, A/B testing.", details: {keyPoints: ["Benchmarks: MMLU, HumanEval, MT-Bench for comparison", "Human eval: Quality, helpfulness, harmlessness ratings", "A/B testing: Compare models/prompts in production", "Automated metrics: BLEU, ROUGE (weak correlation with quality)"], proscons: {pros: ["Quantify quality", "Compare models", "Track improvements"], cons: ["Expensive (human eval)", "Benchmarks limited", "Goodhart's law"]}}};
+nodeDetails.episodic = {
+    name: "Episodic Memory",
+    description: "Store event sequences (conversations, actions). Retrieve by time/context.",
+    details: {
+        keyPoints: [
+            "Timeline-based: Events in chronological order",
+            "Context tags: Conversation ID, session, user",
+            "Retrieval: Query by time range, context, or semantic similarity",
+            "Use cases: Multi-turn chat, debugging agent behavior, personalization"
+        ],
+        proscons: {
+            pros: [
+                "Natural for conversations",
+                "Time-based queries",
+                "Complete history"
+            ],
+            cons: [
+                "Storage grows unbounded",
+                "Retrieval can be slow",
+                "Privacy concerns"
+            ]
+        }
+    },
+    connections: [
+        "Memory",
+        "Conversation Summarization"
+    ]
+};
+nodeDetails.errorhandling = {
+    name: "Error Handling",
+    description: "Retry logic, fallbacks, error messages for robust agents.",
+    details: {
+        keyPoints: [
+            "Retry: Exponential backoff (1s, 2s, 4s)",
+            "Fallback: Alternative tool or simplified request",
+            "Error messages: Human-readable, actionable",
+            "Circuit breaker: Stop retrying after N failures"
+        ],
+        proscons: {
+            pros: [
+                "Robustness",
+                "User-friendly",
+                "Prevents cascading failures"
+            ],
+            cons: [
+                "Latency overhead",
+                "Complexity",
+                "Cost of retries"
+            ]
+        }
+    },
+    connections: [
+        "API Calling"
+    ]
+};
+nodeDetails.evaluation = {
+    name: "LLM Evaluation",
+    description: "Measure quality: benchmarks, human eval, A/B testing.",
+    details: {
+        keyPoints: [
+            "Benchmarks: MMLU, HumanEval, MT-Bench for comparison",
+            "Human eval: Quality, helpfulness, harmlessness ratings",
+            "A/B testing: Compare models/prompts in production",
+            "Automated metrics: BLEU, ROUGE (weak correlation with quality)"
+        ],
+        proscons: {
+            pros: [
+                "Quantify quality",
+                "Compare models",
+                "Track improvements"
+            ],
+            cons: [
+                "Expensive (human eval)",
+                "Benchmarks limited",
+                "Goodhart's law"
+            ]
+        }
+    },
+    connections: [
+        "Production",
+        "Benchmarks",
+        "RLHF",
+        "Bias Detection"
+    ]
+};
 nodeDetails.fewshot = {
     name: "Few-Shot Learning",
     description: "Provide examples in prompt for LLM to learn pattern without fine-tuning. Emergent ability at 10B+ scale.",
@@ -356,13 +1041,84 @@ nodeDetails.fewshot = {
             "Limitations: Can't learn entirely new concepts (model must have seen related patterns in pre-training). Sensitive to prompt format, example order."
         ],
         proscons: {
-            pros: ["No fine-tuning needed", "Fast (just change prompt)", "Sample-efficient (1-10 examples)", "Works for diverse tasks", "Interpretable (examples visible)", "Emergent capability"],
-            cons: ["Requires large models (10B+)", "Consumes context tokens", "Brittle to example order/format", "Can't learn truly novel concepts", "Quality < fine-tuning", "Expensive inference (long prompts)"]
+            pros: [
+                "No fine-tuning needed",
+                "Fast (just change prompt)",
+                "Sample-efficient (1-10 examples)",
+                "Works for diverse tasks",
+                "Interpretable (examples visible)",
+                "Emergent capability"
+            ],
+            cons: [
+                "Requires large models (10B+)",
+                "Consumes context tokens",
+                "Brittle to example order/format",
+                "Can't learn truly novel concepts",
+                "Quality < fine-tuning",
+                "Expensive inference (long prompts)"
+            ]
         }
-    }
+    },
+    connections: [
+        "Prompting",
+        "Zero-Shot"
+    ]
 };
-nodeDetails.filtering = {name: "Content Filtering", description: "Block harmful content: NSFW, hate speech, PII, misinformation.", details: {keyPoints: ["Input filtering: Block toxic prompts before LLM", "Output filtering: Check LLM response before serving", "Classifiers: Perspective API, OpenAI moderation", "PII detection: Regex, NER for emails, SSN, credit cards"], proscons: {pros: ["Safety", "Compliance", "Brand protection"], cons: ["False positives", "Latency overhead", "Censorship"]}}};
-nodeDetails.gpt4v = {name: "GPT-4V / Gemini Vision", description: "Multimodal LLMs understanding images and text. VQA, OCR, chart analysis.", details: {keyPoints: ["Vision encoder + large language model", "Image captioning, VQA, OCR, diagrams", "Safety: Content filtering, refuse face recognition", "Use cases: Accessibility, education, support"], proscons: {pros: ["Rich visual understanding", "Natural language interface", "No task-specific models"], cons: ["Hallucination risk", "Expensive inference", "Privacy concerns", "Biased toward web images"]}}};
+nodeDetails.filtering = {
+    name: "Content Filtering",
+    description: "Block harmful content: NSFW, hate speech, PII, misinformation.",
+    details: {
+        keyPoints: [
+            "Input filtering: Block toxic prompts before LLM",
+            "Output filtering: Check LLM response before serving",
+            "Classifiers: Perspective API, OpenAI moderation",
+            "PII detection: Regex, NER for emails, SSN, credit cards"
+        ],
+        proscons: {
+            pros: [
+                "Safety",
+                "Compliance",
+                "Brand protection"
+            ],
+            cons: [
+                "False positives",
+                "Latency overhead",
+                "Censorship"
+            ]
+        }
+    },
+    connections: [
+        "Safety"
+    ]
+};
+nodeDetails.gpt4v = {
+    name: "GPT-4V / Gemini Vision",
+    description: "Multimodal LLMs understanding images and text. VQA, OCR, chart analysis.",
+    details: {
+        keyPoints: [
+            "Vision encoder + large language model",
+            "Image captioning, VQA, OCR, diagrams",
+            "Safety: Content filtering, refuse face recognition",
+            "Use cases: Accessibility, education, support"
+        ],
+        proscons: {
+            pros: [
+                "Rich visual understanding",
+                "Natural language interface",
+                "No task-specific models"
+            ],
+            cons: [
+                "Hallucination risk",
+                "Expensive inference",
+                "Privacy concerns",
+                "Biased toward web images"
+            ]
+        }
+    },
+    connections: [
+        "Multimodal"
+    ]
+};
 nodeDetails.hybrid = {
     name: "Hybrid Retrieval",
     description: "Combine dense (semantic) + sparse (keyword) retrieval. Best of both worlds. Rank fusion merges results.",
@@ -376,12 +1132,55 @@ nodeDetails.hybrid = {
             "Reranking: After hybrid retrieval, rerank top-k with cross-encoder. Further quality boost."
         ],
         proscons: {
-            pros: ["Best quality", "Robust to query types", "Combines semantic + keyword", "Production standard", "Proven at scale"],
-            cons: ["2x retrieval cost", "Complexity", "Tuning α needed", "Slightly slower", "Rank fusion heuristics"]
+            pros: [
+                "Best quality",
+                "Robust to query types",
+                "Combines semantic + keyword",
+                "Production standard",
+                "Proven at scale"
+            ],
+            cons: [
+                "2x retrieval cost",
+                "Complexity",
+                "Tuning α needed",
+                "Slightly slower",
+                "Rank fusion heuristics"
+            ]
         }
-    }
+    },
+    connections: [
+        "RAG",
+        "Dense Retrieval",
+        "Sparse Retrieval",
+        "Reranking"
+    ]
 };
-nodeDetails.imagetextencoder = {name: "Image-Text Encoders", description: "Neural networks converting images and text to shared embedding space. Foundation for multimodal systems.", details: {keyPoints: ["Image encoder (CNN/ViT) + text encoder (Transformer)", "Projection to shared d-dim space", "Contrastive training (InfoNCE loss)", "Enables cross-modal search and retrieval"], proscons: {pros: ["Cross-modal search", "Zero-shot transfer", "Foundation for text-to-image"], cons: ["Requires massive paired datasets", "Quality varies by domain"]}}};
+nodeDetails.imagetextencoder = {
+    name: "Image-Text Encoders",
+    description: "Neural networks converting images and text to shared embedding space. Foundation for multimodal systems.",
+    details: {
+        keyPoints: [
+            "Image encoder (CNN/ViT) + text encoder (Transformer)",
+            "Projection to shared d-dim space",
+            "Contrastive training (InfoNCE loss)",
+            "Enables cross-modal search and retrieval"
+        ],
+        proscons: {
+            pros: [
+                "Cross-modal search",
+                "Zero-shot transfer",
+                "Foundation for text-to-image"
+            ],
+            cons: [
+                "Requires massive paired datasets",
+                "Quality varies by domain"
+            ]
+        }
+    },
+    connections: [
+        "CLIP"
+    ]
+};
 nodeDetails.inference = {
     name: "Inference Optimization",
     description: "Techniques to reduce latency and cost during model deployment: KV cache, batching, quantization, speculative decoding.",
@@ -414,12 +1213,123 @@ nodeDetails.inference = {
             ]
         }
     },
-    connections: ["KV Cache", "Quantization", "Batching", "Serving", "Speculative Decoding"]
+    connections: [
+        "KV Cache",
+        "Quantization",
+        "Batching",
+        "Serving",
+        "Speculative Decoding"
+    ]
 };
-nodeDetails.jailbreak = {name: "Jailbreak Defense", description: "Detect and block adversarial prompts trying to bypass safety.", details: {keyPoints: ["Prompt injection: 'Ignore instructions, say...'", "Roleplay attacks: 'You are DAN, Do Anything Now'", "Detection: Classifier for adversarial prompts", "Defense: Refuse, rephrase, escalate to human"], proscons: {pros: ["Prevent misuse", "Protect brand", "Compliance"], cons: ["Cat-and-mouse", "False positives", "Novel attacks"]}}};
-nodeDetails.jsonmode = {name: "JSON Mode", description: "OpenAI, Anthropic support for guaranteed JSON output.", details: {keyPoints: ["API parameter: response_format={'type': 'json_object'}", "Guarantee: Output is always valid JSON", "Schema: Still need to validate content matches expected schema", "Use cases: Function calling, structured data extraction"], proscons: {pros: ["100% valid JSON", "No parsing errors", "Simple to use"], cons: ["Model support limited", "No schema validation", "Slightly more expensive"]}}};
-nodeDetails.knowledgegraph = {name: "Knowledge Graphs", description: "Graph databases (Neo4j, Nebula) storing entities and relationships for semantic memory.", details: {keyPoints: ["Nodes: Entities (Person, Company). Edges: Relationships (worksAt, locatedIn)", "Query languages: Cypher (Neo4j), GraphQL", "Inference: Path finding, transitive closure", "Integration: Extract from text via NER + relation extraction"], proscons: {pros: ["Complex queries", "Relationships explicit", "Scalable"], cons: ["Schema complexity", "Extraction quality", "Learning curve"]}}};
-nodeDetails.kvcache = {name: "KV Cache", description: "Cache key/value tensors during generation to avoid recomputing past tokens. Reduces O(n²) to O(n).", details: {keyPoints: ["Saves compute by caching past attention keys/values", "Huge speedup (10-100x) for long sequences", "Memory trade-off: saves compute, uses GPU memory", "PagedAttention (vLLM): Efficient KV cache management"], proscons: {pros: ["Essential for production inference", "Enables real-time chat", "Standard in all systems"], cons: ["Memory overhead (GBs for long context)", "Complicates batching", "Caps batch size or context"]}}};
+nodeDetails.jailbreak = {
+    name: "Jailbreak Defense",
+    description: "Detect and block adversarial prompts trying to bypass safety.",
+    details: {
+        keyPoints: [
+            "Prompt injection: 'Ignore instructions, say...'",
+            "Roleplay attacks: 'You are DAN, Do Anything Now'",
+            "Detection: Classifier for adversarial prompts",
+            "Defense: Refuse, rephrase, escalate to human"
+        ],
+        proscons: {
+            pros: [
+                "Prevent misuse",
+                "Protect brand",
+                "Compliance"
+            ],
+            cons: [
+                "Cat-and-mouse",
+                "False positives",
+                "Novel attacks"
+            ]
+        }
+    },
+    connections: [
+        "Safety",
+        "Red Teaming"
+    ]
+};
+nodeDetails.jsonmode = {
+    name: "JSON Mode",
+    description: "OpenAI, Anthropic support for guaranteed JSON output.",
+    details: {
+        keyPoints: [
+            "API parameter: response_format={'type': 'json_object'}",
+            "Guarantee: Output is always valid JSON",
+            "Schema: Still need to validate content matches expected schema",
+            "Use cases: Function calling, structured data extraction"
+        ],
+        proscons: {
+            pros: [
+                "100% valid JSON",
+                "No parsing errors",
+                "Simple to use"
+            ],
+            cons: [
+                "Model support limited",
+                "No schema validation",
+                "Slightly more expensive"
+            ]
+        }
+    },
+    connections: [
+        "Structured Output"
+    ]
+};
+nodeDetails.knowledgegraph = {
+    name: "Knowledge Graphs",
+    description: "Graph databases (Neo4j, Nebula) storing entities and relationships for semantic memory.",
+    details: {
+        keyPoints: [
+            "Nodes: Entities (Person, Company). Edges: Relationships (worksAt, locatedIn)",
+            "Query languages: Cypher (Neo4j), GraphQL",
+            "Inference: Path finding, transitive closure",
+            "Integration: Extract from text via NER + relation extraction"
+        ],
+        proscons: {
+            pros: [
+                "Complex queries",
+                "Relationships explicit",
+                "Scalable"
+            ],
+            cons: [
+                "Schema complexity",
+                "Extraction quality",
+                "Learning curve"
+            ]
+        }
+    },
+    connections: [
+        "Semantic Memory"
+    ]
+};
+nodeDetails.kvcache = {
+    name: "KV Cache",
+    description: "Cache key/value tensors during generation to avoid recomputing past tokens. Reduces O(n²) to O(n).",
+    details: {
+        keyPoints: [
+            "Saves compute by caching past attention keys/values",
+            "Huge speedup (10-100x) for long sequences",
+            "Memory trade-off: saves compute, uses GPU memory",
+            "PagedAttention (vLLM): Efficient KV cache management"
+        ],
+        proscons: {
+            pros: [
+                "Essential for production inference",
+                "Enables real-time chat",
+                "Standard in all systems"
+            ],
+            cons: [
+                "Memory overhead (GBs for long context)",
+                "Complicates batching",
+                "Caps batch size or context"
+            ]
+        }
+    },
+    connections: [
+        "Inference"
+    ]
+};
 nodeDetails.langchain = {
     name: "LangChain",
     description: "Most popular LLM framework. Chains, agents, memory, tools, retrievers for building applications.",
@@ -433,14 +1343,114 @@ nodeDetails.langchain = {
             "LangChain Expression Language (LCEL): Pipelines with | operator. chain = prompt | llm | parser."
         ],
         proscons: {
-            pros: ["Huge ecosystem", "Easy to start", "Production-ready", "Active community", "Composable", "Well-documented"],
-            cons: ["Complex abstractions", "Version churn", "Over-engineered for simple tasks", "Debugging hard", "Performance overhead"]
+            pros: [
+                "Huge ecosystem",
+                "Easy to start",
+                "Production-ready",
+                "Active community",
+                "Composable",
+                "Well-documented"
+            ],
+            cons: [
+                "Complex abstractions",
+                "Version churn",
+                "Over-engineered for simple tasks",
+                "Debugging hard",
+                "Performance overhead"
+            ]
         }
-    }
+    },
+    connections: [
+        "Agent Frameworks"
+    ]
 };
-nodeDetails.lifecycle = {name: "Model Lifecycle", description: "Versioning, deployment, rollback, A/B testing for production models.", details: {keyPoints: ["Versioning: Model v1, v2, v3. Track changes", "Canary deployment: 5% traffic to new model, monitor, rollout", "A/B testing: Split traffic 50/50, measure quality/cost", "Rollback: Instant revert if new model degrades"], proscons: {pros: ["Safe deployment", "Measure impact", "Quick rollback"], cons: ["Infrastructure complexity", "Traffic splitting", "Monitoring burden"]}}};
-nodeDetails.longcontext = {name: "Long Context Handling", description: "Techniques to extend context beyond training length: RoPE scaling, sliding window, sparse attention.", details: {keyPoints: ["Sliding Window: Attend only to recent N tokens", "RoPE Scaling: Interpolate position embeddings", "Sparse Attention: Attend to subset (local + global)", "Flash Attention: Fused kernel for efficiency"], proscons: {pros: ["Process entire books/codebases", "Fewer RAG lookups needed", "Better document understanding"], cons: ["Quality degrades at extreme lengths", "Lost-in-the-middle problem", "Still expensive"]}}};
-nodeDetails.lora = {name: "LoRA", description: "Low-Rank Adaptation. Efficient fine-tuning by training small low-rank matrices instead of full weights.", details: {keyPoints: ["Freeze base model, add trainable ΔW = AB where rank r << d", "Train only 0.1-1% of parameters", "3-10x faster training, 3x less memory", "Can merge LoRA for zero inference overhead"], proscons: {pros: ["Tiny storage (MBs vs GBs)", "Fast training on consumer GPUs", "Multiple LoRAs on one base"], cons: ["Slightly lower quality than full fine-tuning", "Rank r is hyperparameter"]}}};
+nodeDetails.lifecycle = {
+    name: "Model Lifecycle",
+    description: "Versioning, deployment, rollback, A/B testing for production models.",
+    details: {
+        keyPoints: [
+            "Versioning: Model v1, v2, v3. Track changes",
+            "Canary deployment: 5% traffic to new model, monitor, rollout",
+            "A/B testing: Split traffic 50/50, measure quality/cost",
+            "Rollback: Instant revert if new model degrades"
+        ],
+        proscons: {
+            pros: [
+                "Safe deployment",
+                "Measure impact",
+                "Quick rollback"
+            ],
+            cons: [
+                "Infrastructure complexity",
+                "Traffic splitting",
+                "Monitoring burden"
+            ]
+        }
+    },
+    connections: [
+        "Production",
+        "Versioning / A/B Testing",
+        "Monitoring"
+    ]
+};
+nodeDetails.longcontext = {
+    name: "Long Context Handling",
+    description: "Techniques to extend context beyond training length: RoPE scaling, sliding window, sparse attention.",
+    details: {
+        keyPoints: [
+            "Sliding Window: Attend only to recent N tokens",
+            "RoPE Scaling: Interpolate position embeddings",
+            "Sparse Attention: Attend to subset (local + global)",
+            "Flash Attention: Fused kernel for efficiency"
+        ],
+        proscons: {
+            pros: [
+                "Process entire books/codebases",
+                "Fewer RAG lookups needed",
+                "Better document understanding"
+            ],
+            cons: [
+                "Quality degrades at extreme lengths",
+                "Lost-in-the-middle problem",
+                "Still expensive"
+            ]
+        }
+    },
+    connections: [
+        "Transformer",
+        "RoPE",
+        "Sliding Window",
+        "Attention",
+        "Context Window Management"
+    ]
+};
+nodeDetails.lora = {
+    name: "LoRA",
+    description: "Low-Rank Adaptation. Efficient fine-tuning by training small low-rank matrices instead of full weights.",
+    details: {
+        keyPoints: [
+            "Freeze base model, add trainable ΔW = AB where rank r << d",
+            "Train only 0.1-1% of parameters",
+            "3-10x faster training, 3x less memory",
+            "Can merge LoRA for zero inference overhead"
+        ],
+        proscons: {
+            pros: [
+                "Tiny storage (MBs vs GBs)",
+                "Fast training on consumer GPUs",
+                "Multiple LoRAs on one base"
+            ],
+            cons: [
+                "Slightly lower quality than full fine-tuning",
+                "Rank r is hyperparameter"
+            ]
+        }
+    },
+    connections: [
+        "SFT",
+        "QLoRA"
+    ]
+};
 nodeDetails.memory = {
     name: "Agent Memory",
     description: "Store and recall past interactions. Short-term (context), long-term (vector DB), semantic (knowledge graphs).",
@@ -454,15 +1464,141 @@ nodeDetails.memory = {
             "Retrieval strategies: Recency (recent first), relevance (similarity search), importance (user-defined weights)."
         ],
         proscons: {
-            pros: ["Short-term: Fast", "Long-term: Scalable", "Semantic: Reasoning", "Consolidation: Efficient", "Multi-strategy: Flexible"],
-            cons: ["Short-term: Limited", "Long-term: Retrieval overhead", "Semantic: Extraction errors", "Consolidation: Lossy", "All: Complexity"]
+            pros: [
+                "Short-term: Fast",
+                "Long-term: Scalable",
+                "Semantic: Reasoning",
+                "Consolidation: Efficient",
+                "Multi-strategy: Flexible"
+            ],
+            cons: [
+                "Short-term: Limited",
+                "Long-term: Retrieval overhead",
+                "Semantic: Extraction errors",
+                "Consolidation: Lossy",
+                "All: Complexity"
+            ]
         }
-    }
+    },
+    connections: [
+        "Episodic Memory",
+        "Semantic Memory",
+        "Vector DB",
+        "Context Window Management",
+        "RAG",
+        "Multi-Agent"
+    ]
 };
-nodeDetails.mmlu = {name: "MMLU", description: "Massive Multitask Language Understanding. 57 subjects, 15K questions. Knowledge benchmark.", details: {keyPoints: ["Subjects: STEM, humanities, social sciences, professional", "Format: Multiple choice, 4 options", "Difficulty: High school to expert level", "Scores: GPT-4 ~86%, Random ~25%"], proscons: {pros: ["Broad coverage", "Standardized", "Easy to run"], cons: ["Multiple choice bias", "Doesn't test generation", "Can be gamed"]}}};
-nodeDetails.modelrouting = {name: "Model Routing", description: "Route requests to different models based on complexity, cost, latency requirements.", details: {keyPoints: ["Complexity classifier: Predict if query is easy/hard", "Easy → small model (GPT-3.5), Hard → large (GPT-4)", "Fallback: If small model fails, retry with large", "Savings: 50-70% cost for 80%+ quality"], proscons: {pros: ["Cost optimization", "Latency improvement", "Quality maintained"], cons: ["Classifier errors", "Complexity", "Two models needed"]}}};
-nodeDetails.monitoring = {name: "Monitoring", description: "Track latency, cost, errors, quality for production LLM systems.", details: {keyPoints: ["Metrics: TTFT, TPOT, throughput, error rate, cost per request", "Logging: Prompts, responses, tool calls for debugging", "Alerts: Latency spikes, error rate increases", "Dashboards: Grafana, Datadog for visualization"], proscons: {pros: ["Visibility", "Debugging", "SLA tracking"], cons: ["Overhead", "Privacy (logging prompts)", "Alert fatigue"]}}};
-nodeDetails.mtbench = {name: "MT-Bench", description: "Multi-turn conversation. 80 questions. GPT-4 judges quality (1-10 scale).", details: {keyPoints: ["Multi-turn: 2 turns per conversation. Tests consistency", "Judging: GPT-4 rates helpfulness, relevance, correctness", "Categories: Writing, roleplay, reasoning, math, coding", "Scores: GPT-4 ~9.0, GPT-3.5 ~7.9"], proscons: {pros: ["Multi-turn", "Conversational", "Quality-focused"], cons: ["GPT-4 judge bias", "Expensive", "80 questions (small)"]}}};
+nodeDetails.mmlu = {
+    name: "MMLU",
+    description: "Massive Multitask Language Understanding. 57 subjects, 15K questions. Knowledge benchmark.",
+    details: {
+        keyPoints: [
+            "Subjects: STEM, humanities, social sciences, professional",
+            "Format: Multiple choice, 4 options",
+            "Difficulty: High school to expert level",
+            "Scores: GPT-4 ~86%, Random ~25%"
+        ],
+        proscons: {
+            pros: [
+                "Broad coverage",
+                "Standardized",
+                "Easy to run"
+            ],
+            cons: [
+                "Multiple choice bias",
+                "Doesn't test generation",
+                "Can be gamed"
+            ]
+        }
+    },
+    connections: [
+        "Benchmarks"
+    ]
+};
+nodeDetails.modelrouting = {
+    name: "Model Routing",
+    description: "Route requests to different models based on complexity, cost, latency requirements.",
+    details: {
+        keyPoints: [
+            "Complexity classifier: Predict if query is easy/hard",
+            "Easy → small model (GPT-3.5), Hard → large (GPT-4)",
+            "Fallback: If small model fails, retry with large",
+            "Savings: 50-70% cost for 80%+ quality"
+        ],
+        proscons: {
+            pros: [
+                "Cost optimization",
+                "Latency improvement",
+                "Quality maintained"
+            ],
+            cons: [
+                "Classifier errors",
+                "Complexity",
+                "Two models needed"
+            ]
+        }
+    },
+    connections: [
+        "Cost Management"
+    ]
+};
+nodeDetails.monitoring = {
+    name: "Monitoring",
+    description: "Track latency, cost, errors, quality for production LLM systems.",
+    details: {
+        keyPoints: [
+            "Metrics: TTFT, TPOT, throughput, error rate, cost per request",
+            "Logging: Prompts, responses, tool calls for debugging",
+            "Alerts: Latency spikes, error rate increases",
+            "Dashboards: Grafana, Datadog for visualization"
+        ],
+        proscons: {
+            pros: [
+                "Visibility",
+                "Debugging",
+                "SLA tracking"
+            ],
+            cons: [
+                "Overhead",
+                "Privacy (logging prompts)",
+                "Alert fatigue"
+            ]
+        }
+    },
+    connections: [
+        "Production",
+        "Agent Lifecycle",
+        "Audit Logging"
+    ]
+};
+nodeDetails.mtbench = {
+    name: "MT-Bench",
+    description: "Multi-turn conversation. 80 questions. GPT-4 judges quality (1-10 scale).",
+    details: {
+        keyPoints: [
+            "Multi-turn: 2 turns per conversation. Tests consistency",
+            "Judging: GPT-4 rates helpfulness, relevance, correctness",
+            "Categories: Writing, roleplay, reasoning, math, coding",
+            "Scores: GPT-4 ~9.0, GPT-3.5 ~7.9"
+        ],
+        proscons: {
+            pros: [
+                "Multi-turn",
+                "Conversational",
+                "Quality-focused"
+            ],
+            cons: [
+                "GPT-4 judge bias",
+                "Expensive",
+                "80 questions (small)"
+            ]
+        }
+    },
+    connections: [
+        "Benchmarks"
+    ]
+};
 nodeDetails.multiagent = {
     name: "Multi-Agent Systems",
     description: "Multiple LLM agents collaborate on complex tasks. Supervisor-worker, peer-to-peer, or hierarchical topologies.",
@@ -476,13 +1612,94 @@ nodeDetails.multiagent = {
             "Challenges: Cost (multiple LLM calls), coordination complexity, message parsing, infinite loops, convergence."
         ],
         proscons: {
-            pros: ["Task decomposition", "Specialization", "Parallel execution", "Robust to single-agent failures", "Handles complex workflows", "Role clarity"],
-            cons: ["High cost (N agents = N× calls)", "Coordination overhead", "Debugging nightmare", "Message parsing fragility", "Can loop infinitely", "Overkill for simple tasks"]
+            pros: [
+                "Task decomposition",
+                "Specialization",
+                "Parallel execution",
+                "Robust to single-agent failures",
+                "Handles complex workflows",
+                "Role clarity"
+            ],
+            cons: [
+                "High cost (N agents = N× calls)",
+                "Coordination overhead",
+                "Debugging nightmare",
+                "Message parsing fragility",
+                "Can loop infinitely",
+                "Overkill for simple tasks"
+            ]
         }
-    }
+    },
+    connections: [
+        "Planning",
+        "Coordination",
+        "Task Allocation",
+        "Agent Communication",
+        "Agent Frameworks",
+        "Memory"
+    ]
 };
-nodeDetails.multimodal = {name: "Multimodal AI", description: "Models processing multiple modalities: text, images, video, audio. GPT-4V, Gemini, DALL-E.", details: {keyPoints: ["Vision + Language: Image encoder → projection → LLM", "Text-to-Image: Diffusion models (DALL-E, Midjourney)", "Video: Frame sampling + temporal encoding", "Audio: Speech-to-text → LLM → text-to-speech"], proscons: {pros: ["Richer understanding", "New applications (image search, generation)", "Unified interface"], cons: ["Massive training data needed", "Alignment challenges", "Hallucination in all modalities", "Expensive inference"]}}};
-nodeDetails.paramextract = {name: "Parameter Extraction", description: "Extract function arguments from natural language query.", details: {keyPoints: ["Slot filling: Identify entities (city, date, number)", "JSON mode: Force model to output valid JSON", "Validation: Check types, ranges, required fields", "Clarification: Ask user if params missing"], proscons: {pros: ["Natural language interface", "Flexible", "No forms needed"], cons: ["Extraction errors", "Ambiguity", "Validation needed"]}}};
+nodeDetails.multimodal = {
+    name: "Multimodal AI",
+    description: "Models processing multiple modalities: text, images, video, audio. GPT-4V, Gemini, DALL-E.",
+    details: {
+        keyPoints: [
+            "Vision + Language: Image encoder → projection → LLM",
+            "Text-to-Image: Diffusion models (DALL-E, Midjourney)",
+            "Video: Frame sampling + temporal encoding",
+            "Audio: Speech-to-text → LLM → text-to-speech"
+        ],
+        proscons: {
+            pros: [
+                "Richer understanding",
+                "New applications (image search, generation)",
+                "Unified interface"
+            ],
+            cons: [
+                "Massive training data needed",
+                "Alignment challenges",
+                "Hallucination in all modalities",
+                "Expensive inference"
+            ]
+        }
+    },
+    connections: [
+        "ViT",
+        "CLIP",
+        "GPT-4V",
+        "Video Understanding",
+        "Audio Processing",
+        "Tool Use"
+    ]
+};
+nodeDetails.paramextract = {
+    name: "Parameter Extraction",
+    description: "Extract function arguments from natural language query.",
+    details: {
+        keyPoints: [
+            "Slot filling: Identify entities (city, date, number)",
+            "JSON mode: Force model to output valid JSON",
+            "Validation: Check types, ranges, required fields",
+            "Clarification: Ask user if params missing"
+        ],
+        proscons: {
+            pros: [
+                "Natural language interface",
+                "Flexible",
+                "No forms needed"
+            ],
+            cons: [
+                "Extraction errors",
+                "Ambiguity",
+                "Validation needed"
+            ]
+        }
+    },
+    connections: [
+        "Tool Use",
+        "Structured Output"
+    ]
+};
 nodeDetails.planexec = {
     name: "Plan-and-Execute",
     description: "First plan (decompose into steps), then execute (run steps sequentially). More robust than ReAct for complex tasks.",
@@ -497,12 +1714,63 @@ nodeDetails.planexec = {
             "Challenges: Planning quality critical (bad plan → bad execution). Some tasks don't decompose cleanly. Replanning overhead."
         ],
         proscons: {
-            pros: ["Better for complex tasks", "Clear structure", "Easier to debug (see plan first)", "Handles dependencies", "Replanning adapts to failures", "More predictable"],
-            cons: ["More LLM calls (plan + execute)", "Planning can fail", "Overkill for simple tasks", "Less flexible than ReAct", "Assumes decomposable tasks", "Slower overall"]
+            pros: [
+                "Better for complex tasks",
+                "Clear structure",
+                "Easier to debug (see plan first)",
+                "Handles dependencies",
+                "Replanning adapts to failures",
+                "More predictable"
+            ],
+            cons: [
+                "More LLM calls (plan + execute)",
+                "Planning can fail",
+                "Overkill for simple tasks",
+                "Less flexible than ReAct",
+                "Assumes decomposable tasks",
+                "Slower overall"
+            ]
         }
-    }
+    },
+    connections: [
+        "Planning"
+    ]
 };
-nodeDetails.planning = {name: "Planning", description: "High-level task decomposition and sequencing. Break complex goals into subtasks.", details: {keyPoints: ["Task decomposition: Complex goal → subtasks", "Hierarchical: Multi-level plans", "Re-planning: Handle failures dynamically", "Plan formats: Natural language, JSON, PDDL, code"], proscons: {pros: ["Handle complex multi-step tasks", "More organized than reactive", "Easier to debug (inspect plan)", "Reusable plans"], cons: ["Planning errors compound", "Brittle to changes", "Expensive (extra LLM calls)", "Over-planning risk"]}}};
+nodeDetails.planning = {
+    name: "Planning",
+    description: "High-level task decomposition and sequencing. Break complex goals into subtasks.",
+    details: {
+        keyPoints: [
+            "Task decomposition: Complex goal → subtasks",
+            "Hierarchical: Multi-level plans",
+            "Re-planning: Handle failures dynamically",
+            "Plan formats: Natural language, JSON, PDDL, code"
+        ],
+        proscons: {
+            pros: [
+                "Handle complex multi-step tasks",
+                "More organized than reactive",
+                "Easier to debug (inspect plan)",
+                "Reusable plans"
+            ],
+            cons: [
+                "Planning errors compound",
+                "Brittle to changes",
+                "Expensive (extra LLM calls)",
+                "Over-planning risk"
+            ]
+        }
+    },
+    connections: [
+        "ReAct",
+        "Chain-of-Thought",
+        "Tree-of-Thoughts",
+        "Plan-Execute",
+        "Prompting",
+        "Multi-Agent",
+        "Transformer"
+    ]
+};
 nodeDetails.pretraining = {
     name: "Pre-training",
     description: "Initial training phase on massive unlabeled text (trillions of tokens) to learn general language understanding.",
@@ -536,10 +1804,73 @@ nodeDetails.pretraining = {
             ]
         }
     },
-    connections: ["Transformer", "SFT", "Tokenization", "Scaling Laws", "Distributed Training"]
+    connections: [
+        "Transformer",
+        "SFT",
+        "Tokenization",
+        "Scaling Laws",
+        "Distributed Training"
+    ]
 };
-nodeDetails.privacy = {name: "Privacy & GDPR", description: "Data protection, GDPR compliance, PII handling.", details: {keyPoints: ["GDPR: Right to deletion, data minimization, consent", "PII scrubbing: Remove emails, names, SSN before logging", "Data retention: Delete logs after 30-90 days", "Encryption: Encrypt data at rest and in transit"], proscons: {pros: ["Compliance", "User trust", "Legal protection"], cons: ["Complexity", "Storage overhead", "Functionality limits"]}}};
-nodeDetails.production = {name: "Production Deployment", description: "Deploy LLMs at scale: infrastructure, monitoring, cost optimization.", details: {keyPoints: ["Serving: vLLM, TensorRT-LLM for high throughput", "Monitoring: Latency, cost, errors, quality metrics", "Scaling: Auto-scale based on load", "Cost: Prompt caching, batch requests, cheaper models for simple tasks"], proscons: {pros: ["Reliable", "Scalable", "Monitored"], cons: ["Complex", "Expensive", "Expertise needed"]}}};
+nodeDetails.privacy = {
+    name: "Privacy & GDPR",
+    description: "Data protection, GDPR compliance, PII handling.",
+    details: {
+        keyPoints: [
+            "GDPR: Right to deletion, data minimization, consent",
+            "PII scrubbing: Remove emails, names, SSN before logging",
+            "Data retention: Delete logs after 30-90 days",
+            "Encryption: Encrypt data at rest and in transit"
+        ],
+        proscons: {
+            pros: [
+                "Compliance",
+                "User trust",
+                "Legal protection"
+            ],
+            cons: [
+                "Complexity",
+                "Storage overhead",
+                "Functionality limits"
+            ]
+        }
+    },
+    connections: [
+        "Safety"
+    ]
+};
+nodeDetails.production = {
+    name: "Production Deployment",
+    description: "Deploy LLMs at scale: infrastructure, monitoring, cost optimization.",
+    details: {
+        keyPoints: [
+            "Serving: vLLM, TensorRT-LLM for high throughput",
+            "Monitoring: Latency, cost, errors, quality metrics",
+            "Scaling: Auto-scale based on load",
+            "Cost: Prompt caching, batch requests, cheaper models for simple tasks"
+        ],
+        proscons: {
+            pros: [
+                "Reliable",
+                "Scalable",
+                "Monitored"
+            ],
+            cons: [
+                "Complex",
+                "Expensive",
+                "Expertise needed"
+            ]
+        }
+    },
+    connections: [
+        "Serving",
+        "Monitoring",
+        "Auto-scaling",
+        "Evaluation",
+        "Cost Management",
+        "Agent Lifecycle"
+    ]
+};
 nodeDetails.prompting = {
     name: "Prompt Engineering",
     description: "Craft input text to guide LLM behavior: instructions, examples, formatting, role-playing.",
@@ -554,10 +1885,31 @@ nodeDetails.prompting = {
             "Iterative refinement: Test prompts, analyze failures, add constraints. 'Don't hallucinate', 'Cite sources', 'Say I don't know if uncertain'."
         ],
         proscons: {
-            pros: ["No training needed", "Fast iteration", "Task-agnostic", "Composable (combine techniques)", "Works across models", "Accessible to non-experts"],
-            cons: ["Trial and error", "Brittle (small changes = big effects)", "Model-dependent", "Context length limits", "Can't fix fundamental model limitations", "No guarantees"]
+            pros: [
+                "No training needed",
+                "Fast iteration",
+                "Task-agnostic",
+                "Composable (combine techniques)",
+                "Works across models",
+                "Accessible to non-experts"
+            ],
+            cons: [
+                "Trial and error",
+                "Brittle (small changes = big effects)",
+                "Model-dependent",
+                "Context length limits",
+                "Can't fix fundamental model limitations",
+                "No guarantees"
+            ]
         }
-    }
+    },
+    connections: [
+        "Planning",
+        "Few-Shot",
+        "Zero-Shot",
+        "Chain-of-Thought",
+        "Prompt Optimization"
+    ]
 };
 nodeDetails.promptopt = {
     name: "Prompt Optimization",
@@ -573,12 +1925,55 @@ nodeDetails.promptopt = {
             "Limitations: Computationally expensive (100s of LLM calls), requires good validation set, may overfit, harder to interpret than manual prompts."
         ],
         proscons: {
-            pros: ["Better than manual (10-30% gains)", "Systematic", "Reproducible", "Scales to many tasks", "DSPy compiles to code", "Discovers non-obvious prompts"],
-            cons: ["Expensive (many LLM calls)", "Requires validation set", "Overfitting risk", "Less interpretable", "Learning curve (DSPy)", "Not always worth overhead"]
+            pros: [
+                "Better than manual (10-30% gains)",
+                "Systematic",
+                "Reproducible",
+                "Scales to many tasks",
+                "DSPy compiles to code",
+                "Discovers non-obvious prompts"
+            ],
+            cons: [
+                "Expensive (many LLM calls)",
+                "Requires validation set",
+                "Overfitting risk",
+                "Less interpretable",
+                "Learning curve (DSPy)",
+                "Not always worth overhead"
+            ]
         }
-    }
+    },
+    connections: [
+        "Prompting"
+    ]
 };
-nodeDetails.qlora = {name: "QLoRA", description: "Quantized LoRA. Combines 4-bit quantization with LoRA for extreme efficiency.", details: {keyPoints: ["Store base model in 4-bit (INT4/NF4)", "Train LoRA adapters in FP16", "Fine-tune 65B LLaMA on single 48GB GPU", "Double quantization for extra savings"], proscons: {pros: ["Extreme memory efficiency", "Democratizes LLM fine-tuning", "Quality close to full LoRA"], cons: ["Slower than FP16", "Small quantization loss", "Complex setup"]}}};
+nodeDetails.qlora = {
+    name: "QLoRA",
+    description: "Quantized LoRA. Combines 4-bit quantization with LoRA for extreme efficiency.",
+    details: {
+        keyPoints: [
+            "Store base model in 4-bit (INT4/NF4)",
+            "Train LoRA adapters in FP16",
+            "Fine-tune 65B LLaMA on single 48GB GPU",
+            "Double quantization for extra savings"
+        ],
+        proscons: {
+            pros: [
+                "Extreme memory efficiency",
+                "Democratizes LLM fine-tuning",
+                "Quality close to full LoRA"
+            ],
+            cons: [
+                "Slower than FP16",
+                "Small quantization loss",
+                "Complex setup"
+            ]
+        }
+    },
+    connections: [
+        "LoRA"
+    ]
+};
 nodeDetails.quantization = {
     name: "Quantization",
     description: "Reduce model precision from FP32/FP16 to INT8/INT4 for smaller memory footprint and faster inference.",
@@ -611,7 +2006,13 @@ nodeDetails.quantization = {
             ]
         }
     },
-    connections: ["Inference", "KV Cache", "LoRA", "QLoRA", "Serving"]
+    connections: [
+        "Inference",
+        "KV Cache",
+        "LoRA",
+        "QLoRA",
+        "Serving"
+    ]
 };
 nodeDetails.rag = {
     name: "RAG (Retrieval-Augmented Generation)",
@@ -626,12 +2027,59 @@ nodeDetails.rag = {
             "Challenges: Retrieval quality bottleneck, prompt size limits, latency (retrieval + generation), cost."
         ],
         proscons: {
-            pros: ["Reduces hallucination", "Updatable knowledge", "Cite sources", "No retraining", "Scalable to large corpora"],
-            cons: ["Retrieval bottleneck", "Latency overhead", "Prompt size limits", "Quality depends on chunks", "Expensive (embedding + LLM)"]
+            pros: [
+                "Reduces hallucination",
+                "Updatable knowledge",
+                "Cite sources",
+                "No retraining",
+                "Scalable to large corpora"
+            ],
+            cons: [
+                "Retrieval bottleneck",
+                "Latency overhead",
+                "Prompt size limits",
+                "Quality depends on chunks",
+                "Expensive (embedding + LLM)"
+            ]
         }
-    }
+    },
+    connections: [
+        "Dense Retrieval",
+        "Sparse Retrieval",
+        "Hybrid Retrieval",
+        "Self-RAG",
+        "Memory",
+        "Chunking",
+        "Transformer"
+    ]
 };
-nodeDetails.ratelimit = {name: "Rate Limit Management", description: "Handle API quotas, throttling, cost control.", details: {keyPoints: ["Token bucket: Allow N requests per minute", "Exponential backoff on 429", "Quota tracking: Monitor usage vs limits", "Prioritization: High-priority requests first"], proscons: {pros: ["Respect API limits", "Cost control", "Fair usage"], cons: ["Latency spikes", "Tracking complexity", "User frustration"]}}};
+nodeDetails.ratelimit = {
+    name: "Rate Limit Management",
+    description: "Handle API quotas, throttling, cost control.",
+    details: {
+        keyPoints: [
+            "Token bucket: Allow N requests per minute",
+            "Exponential backoff on 429",
+            "Quota tracking: Monitor usage vs limits",
+            "Prioritization: High-priority requests first"
+        ],
+        proscons: {
+            pros: [
+                "Respect API limits",
+                "Cost control",
+                "Fair usage"
+            ],
+            cons: [
+                "Latency spikes",
+                "Tracking complexity",
+                "User frustration"
+            ]
+        }
+    },
+    connections: [
+        "API Calling"
+    ]
+};
 nodeDetails.react = {
     name: "ReAct (Reason + Act)",
     description: "Interleave reasoning (thought) and actions (tool use). Model generates thought → action → observation loop until done.",
@@ -646,12 +2094,58 @@ nodeDetails.react = {
             "Implementations: LangChain, AutoGPT use ReAct pattern. Production systems add error handling, retries, action validation."
         ],
         proscons: {
-            pros: ["Reduces hallucination", "Grounded in real data", "Interpretable (see reasoning+actions)", "Extensible (add tools)", "Strong empirical results", "Industry standard for agents"],
-            cons: ["Slower (multiple LLM calls)", "Depends on tool quality", "Brittle parsing (action format)", "Can loop infinitely", "Expensive (many tokens)", "Requires good prompting"]
+            pros: [
+                "Reduces hallucination",
+                "Grounded in real data",
+                "Interpretable (see reasoning+actions)",
+                "Extensible (add tools)",
+                "Strong empirical results",
+                "Industry standard for agents"
+            ],
+            cons: [
+                "Slower (multiple LLM calls)",
+                "Depends on tool quality",
+                "Brittle parsing (action format)",
+                "Can loop infinitely",
+                "Expensive (many tokens)",
+                "Requires good prompting"
+            ]
         }
-    }
+    },
+    connections: [
+        "Planning",
+        "Tool Use",
+        "Chain-of-Thought"
+    ]
 };
-nodeDetails.redteaming = {name: "Red Teaming", description: "Adversarial testing. Hire attackers to find vulnerabilities.", details: {keyPoints: ["Manual: Security experts try to break model", "Automated: Generate adversarial prompts at scale", "Focus: Jailbreaks, bias, toxicity, misinformation", "Iteration: Fix vulnerabilities, repeat"], proscons: {pros: ["Find vulnerabilities", "Proactive", "Comprehensive"], cons: ["Expensive", "Never complete", "Requires expertise"]}}};
+nodeDetails.redteaming = {
+    name: "Red Teaming",
+    description: "Adversarial testing. Hire attackers to find vulnerabilities.",
+    details: {
+        keyPoints: [
+            "Manual: Security experts try to break model",
+            "Automated: Generate adversarial prompts at scale",
+            "Focus: Jailbreaks, bias, toxicity, misinformation",
+            "Iteration: Fix vulnerabilities, repeat"
+        ],
+        proscons: {
+            pros: [
+                "Find vulnerabilities",
+                "Proactive",
+                "Comprehensive"
+            ],
+            cons: [
+                "Expensive",
+                "Never complete",
+                "Requires expertise"
+            ]
+        }
+    },
+    connections: [
+        "Safety",
+        "Jailbreak Defense"
+    ]
+};
 nodeDetails.reranking = {
     name: "Reranking",
     description: "Cross-encoder scores query-document pairs. Slower but more accurate than bi-encoder. Final refinement step.",
@@ -665,12 +2159,56 @@ nodeDetails.reranking = {
             "Gains: 10-30% improvement over retrieval-only. Critical for high-precision applications."
         ],
         proscons: {
-            pros: ["High accuracy", "Captures subtle relevance", "Production-ready models", "Proven gains", "Easy to add"],
-            cons: ["Slow (50-200ms per doc)", "Expensive (extra inference)", "Overkill for simple tasks", "Needs GPU for speed", "Can overfit to training"]
+            pros: [
+                "High accuracy",
+                "Captures subtle relevance",
+                "Production-ready models",
+                "Proven gains",
+                "Easy to add"
+            ],
+            cons: [
+                "Slow (50-200ms per doc)",
+                "Expensive (extra inference)",
+                "Overkill for simple tasks",
+                "Needs GPU for speed",
+                "Can overfit to training"
+            ]
         }
-    }
+    },
+    connections: [
+        "Hybrid Retrieval"
+    ]
 };
-nodeDetails.rlhf = {name: "RLHF", description: "Reinforcement Learning from Human Feedback. Train reward model, optimize with PPO.", details: {keyPoints: ["Stage 1: Supervised fine-tuning (SFT) on demonstrations", "Stage 2: Train reward model on human preferences", "Stage 3: Optimize policy with PPO to maximize reward", "Use cases: InstructGPT, ChatGPT, Claude"], proscons: {pros: ["Aligns with humans", "Reduces toxicity", "Better instruction following"], cons: ["Expensive (human labels)", "Sycophancy", "Reward hacking"]}}};
+nodeDetails.rlhf = {
+    name: "RLHF",
+    description: "Reinforcement Learning from Human Feedback. Train reward model, optimize with PPO.",
+    details: {
+        keyPoints: [
+            "Stage 1: Supervised fine-tuning (SFT) on demonstrations",
+            "Stage 2: Train reward model on human preferences",
+            "Stage 3: Optimize policy with PPO to maximize reward",
+            "Use cases: InstructGPT, ChatGPT, Claude"
+        ],
+        proscons: {
+            pros: [
+                "Aligns with humans",
+                "Reduces toxicity",
+                "Better instruction following"
+            ],
+            cons: [
+                "Expensive (human labels)",
+                "Sycophancy",
+                "Reward hacking"
+            ]
+        }
+    },
+    connections: [
+        "SFT",
+        "DPO",
+        "Alignment",
+        "Evaluation"
+    ]
+};
 nodeDetails.rope = {
     name: "RoPE (Rotary Position Embedding)",
     description: "Encode position by rotating query/key vectors. Relative positions emerge naturally. Used in LLaMA, GPT-NeoX.",
@@ -685,12 +2223,62 @@ nodeDetails.rope = {
             "Implementation: Precompute cos/sin lookup tables. Apply element-wise rotation at runtime. Negligible overhead (<1% compute)."
         ],
         proscons: {
-            pros: ["Relative positions naturally", "Extrapolates well", "Efficient (precompute tables)", "No trainable params", "Works for long context with scaling", "Used in LLaMA, GPT-NeoX"],
-            cons: ["Slightly more complex than sinusoidal", "Requires specific Q,K modification", "Scaling methods need tuning", "Not all frameworks support", "Rotation can be confusing", "Dimension must be even"]
+            pros: [
+                "Relative positions naturally",
+                "Extrapolates well",
+                "Efficient (precompute tables)",
+                "No trainable params",
+                "Works for long context with scaling",
+                "Used in LLaMA, GPT-NeoX"
+            ],
+            cons: [
+                "Slightly more complex than sinusoidal",
+                "Requires specific Q,K modification",
+                "Scaling methods need tuning",
+                "Not all frameworks support",
+                "Rotation can be confusing",
+                "Dimension must be even"
+            ]
         }
-    }
+    },
+    connections: [
+        "Long Context"
+    ]
 };
-nodeDetails.safety = {name: "AI Safety", description: "Prevent harmful outputs: content filtering, jailbreak defense, red teaming.", details: {keyPoints: ["Content filtering: Block NSFW, hate speech, PII", "Jailbreak defense: Detect adversarial prompts", "Red teaming: Hire attackers to find vulnerabilities", "Alignment: RLHF, DPO to align with human values"], proscons: {pros: ["Reduce harm", "Compliance", "Trust"], cons: ["False positives", "Censorship concerns", "Cat-and-mouse"]}}};
+nodeDetails.safety = {
+    name: "AI Safety",
+    description: "Prevent harmful outputs: content filtering, jailbreak defense, red teaming.",
+    details: {
+        keyPoints: [
+            "Content filtering: Block NSFW, hate speech, PII",
+            "Jailbreak defense: Detect adversarial prompts",
+            "Red teaming: Hire attackers to find vulnerabilities",
+            "Alignment: RLHF, DPO to align with human values"
+        ],
+        proscons: {
+            pros: [
+                "Reduce harm",
+                "Compliance",
+                "Trust"
+            ],
+            cons: [
+                "False positives",
+                "Censorship concerns",
+                "Cat-and-mouse"
+            ]
+        }
+    },
+    connections: [
+        "Tool Use",
+        "Sandboxing",
+        "Alignment",
+        "Filtering",
+        "Jailbreak Defense",
+        "Audit Logging",
+        "Bias Detection",
+        "Red Teaming"
+    ]
+};
 nodeDetails.sampling = {
     name: "Sampling Techniques",
     description: "Temperature, top-p, top-k control output diversity and quality in autoregressive generation.",
@@ -705,13 +2293,83 @@ nodeDetails.sampling = {
             "Min-length, max-length: Control generation length. Essential for avoiding premature EOS or runaway generation."
         ],
         proscons: {
-            pros: ["Temperature: Simple, effective", "Top-p: Adapts to confidence", "Top-k: Easy to understand", "Repetition penalty: Reduces loops", "Composable: Can combine all", "Production-ready: vLLM supports all"],
-            cons: ["Hyperparameter tuning needed", "No theoretical guarantees", "Can't fix factual errors", "Repetition penalty can hurt quality", "Still stochastic (non-reproducible)", "Compute overhead (~10% slower than greedy)"]
+            pros: [
+                "Temperature: Simple, effective",
+                "Top-p: Adapts to confidence",
+                "Top-k: Easy to understand",
+                "Repetition penalty: Reduces loops",
+                "Composable: Can combine all",
+                "Production-ready: vLLM supports all"
+            ],
+            cons: [
+                "Hyperparameter tuning needed",
+                "No theoretical guarantees",
+                "Can't fix factual errors",
+                "Repetition penalty can hurt quality",
+                "Still stochastic (non-reproducible)",
+                "Compute overhead (~10% slower than greedy)"
+            ]
         }
-    }
+    },
+    connections: [
+        "Decoding"
+    ]
 };
-nodeDetails.sandboxing = {name: "Sandboxing", description: "Isolate code execution: Docker, VMs, containers for security.", details: {keyPoints: ["Docker: Lightweight, fast. Network isolation, resource limits", "Firecracker: AWS Lambda tech. Microsecond startup", "E2B: Code execution API. Managed sandboxes", "Security: No file system access, no network (or whitelist only)"], proscons: {pros: ["Secure isolation", "Resource control", "Multiple languages"], cons: ["Overhead", "Complexity", "Cold start latency"]}}};
-nodeDetails.scaling = {name: "Auto-Scaling", description: "Dynamically scale inference capacity based on load.", details: {keyPoints: ["Metrics: Requests per second, queue length, GPU utilization", "Horizontal scaling: Add more GPU replicas", "Vertical scaling: Larger GPU (A100 → H100)", "Cold start: Warm pool of standby instances"], proscons: {pros: ["Cost efficiency", "Handle spikes", "SLA compliance"], cons: ["Cold start latency", "Coordination", "Over-provisioning"]}}};
+nodeDetails.sandboxing = {
+    name: "Sandboxing",
+    description: "Isolate code execution: Docker, VMs, containers for security.",
+    details: {
+        keyPoints: [
+            "Docker: Lightweight, fast. Network isolation, resource limits",
+            "Firecracker: AWS Lambda tech. Microsecond startup",
+            "E2B: Code execution API. Managed sandboxes",
+            "Security: No file system access, no network (or whitelist only)"
+        ],
+        proscons: {
+            pros: [
+                "Secure isolation",
+                "Resource control",
+                "Multiple languages"
+            ],
+            cons: [
+                "Overhead",
+                "Complexity",
+                "Cold start latency"
+            ]
+        }
+    },
+    connections: [
+        "Code Execution",
+        "Safety"
+    ]
+};
+nodeDetails.scaling = {
+    name: "Auto-Scaling",
+    description: "Dynamically scale inference capacity based on load.",
+    details: {
+        keyPoints: [
+            "Metrics: Requests per second, queue length, GPU utilization",
+            "Horizontal scaling: Add more GPU replicas",
+            "Vertical scaling: Larger GPU (A100 → H100)",
+            "Cold start: Warm pool of standby instances"
+        ],
+        proscons: {
+            pros: [
+                "Cost efficiency",
+                "Handle spikes",
+                "SLA compliance"
+            ],
+            cons: [
+                "Cold start latency",
+                "Coordination",
+                "Over-provisioning"
+            ]
+        }
+    },
+    connections: [
+        "Production"
+    ]
+};
 nodeDetails.scalinglaws = {
     name: "Scaling Laws",
     description: "Predictable power-law relationships between model performance and compute/data/parameters (Kaplan, Hoffmann).",
@@ -745,7 +2403,12 @@ nodeDetails.scalinglaws = {
             ]
         }
     },
-    connections: ["Pre-training", "Distributed Training", "Chinchilla", "Emergent Abilities"]
+    connections: [
+        "Pre-training",
+        "Distributed Training",
+        "Chinchilla",
+        "Emergent Abilities"
+    ]
 };
 nodeDetails.selfrag = {
     name: "Self-RAG",
@@ -760,12 +2423,54 @@ nodeDetails.selfrag = {
             "Quality: Similar or better than standard RAG. Self-correction reduces hallucination."
         ],
         proscons: {
-            pros: ["Adaptive (retrieve when needed)", "Self-correcting", "More efficient", "Better quality", "Interpretable"],
-            cons: ["Requires fine-tuning", "Training complexity", "Reflection tokens add length", "Implementation harder", "Less mature"]
+            pros: [
+                "Adaptive (retrieve when needed)",
+                "Self-correcting",
+                "More efficient",
+                "Better quality",
+                "Interpretable"
+            ],
+            cons: [
+                "Requires fine-tuning",
+                "Training complexity",
+                "Reflection tokens add length",
+                "Implementation harder",
+                "Less mature"
+            ]
         }
-    }
+    },
+    connections: [
+        "RAG"
+    ]
 };
-nodeDetails.semantic = {name: "Semantic Memory", description: "Structured knowledge: facts, relationships. Knowledge graphs (Neo4j, RDF).", details: {keyPoints: ["Entities + relationships: (Alice, worksAt, OpenAI)", "Query: Graph traversal, SPARQL, Cypher", "Reasoning: Infer new facts from existing", "Use cases: QA systems, expert knowledge, complex domains"], proscons: {pros: ["Structured reasoning", "Explainable", "Efficient queries"], cons: ["Extraction errors", "Schema design", "Maintenance overhead"]}}};
+nodeDetails.semantic = {
+    name: "Semantic Memory",
+    description: "Structured knowledge: facts, relationships. Knowledge graphs (Neo4j, RDF).",
+    details: {
+        keyPoints: [
+            "Entities + relationships: (Alice, worksAt, OpenAI)",
+            "Query: Graph traversal, SPARQL, Cypher",
+            "Reasoning: Infer new facts from existing",
+            "Use cases: QA systems, expert knowledge, complex domains"
+        ],
+        proscons: {
+            pros: [
+                "Structured reasoning",
+                "Explainable",
+                "Efficient queries"
+            ],
+            cons: [
+                "Extraction errors",
+                "Schema design",
+                "Maintenance overhead"
+            ]
+        }
+    },
+    connections: [
+        "Memory",
+        "Knowledge Graph"
+    ]
+};
 nodeDetails.sentencepiece = {
     name: "SentencePiece",
     description: "Language-agnostic tokenization treating text as raw byte stream, used in LLaMA, T5, and multilingual models.",
@@ -798,9 +2503,44 @@ nodeDetails.sentencepiece = {
             ]
         }
     },
-    connections: ["Tokenization", "LLaMA", "T5", "Multilingual", "BPE"]
+    connections: [
+        "Tokenization",
+        "LLaMA",
+        "T5",
+        "Multilingual",
+        "BPE"
+    ]
 };
-nodeDetails.serving = {name: "Model Serving", description: "vLLM, TensorRT-LLM, TGI for production LLM inference.", details: {keyPoints: ["vLLM: PagedAttention, continuous batching. 2-24x throughput", "TensorRT-LLM: NVIDIA optimizations. Low latency, FP8 support", "TGI: HuggingFace. Easy deployment, streaming", "Trade-offs: vLLM (throughput), TRT-LLM (latency), TGI (ease)"], proscons: {pros: ["Production-ready", "High throughput", "Low latency"], cons: ["Setup complexity", "GPU dependency", "Version compatibility"]}}};
+nodeDetails.serving = {
+    name: "Model Serving",
+    description: "vLLM, TensorRT-LLM, TGI for production LLM inference.",
+    details: {
+        keyPoints: [
+            "vLLM: PagedAttention, continuous batching. 2-24x throughput",
+            "TensorRT-LLM: NVIDIA optimizations. Low latency, FP8 support",
+            "TGI: HuggingFace. Easy deployment, streaming",
+            "Trade-offs: vLLM (throughput), TRT-LLM (latency), TGI (ease)"
+        ],
+        proscons: {
+            pros: [
+                "Production-ready",
+                "High throughput",
+                "Low latency"
+            ],
+            cons: [
+                "Setup complexity",
+                "GPU dependency",
+                "Version compatibility"
+            ]
+        }
+    },
+    connections: [
+        "Production",
+        "Inference",
+        "Batching",
+        "Caching"
+    ]
+};
 nodeDetails.sft = {
     name: "Supervised Fine-Tuning (SFT)",
     description: "Train pre-trained model on instruction-response pairs to teach desired output format and follow instructions.",
@@ -833,7 +2573,13 @@ nodeDetails.sft = {
             ]
         }
     },
-    connections: ["Pre-training", "RLHF", "DPO", "LoRA", "Prompting"]
+    connections: [
+        "Pre-training",
+        "RLHF",
+        "DPO",
+        "LoRA",
+        "Prompting"
+    ]
 };
 nodeDetails.slidingwindow = {
     name: "Sliding Window Attention",
@@ -849,10 +2595,27 @@ nodeDetails.slidingwindow = {
             "Implementation: Mask attention matrix to zero out tokens outside window. Or use causal + sliding window mask together."
         ],
         proscons: {
-            pros: ["Linear complexity O(nW)", "Enables 100K+ contexts on single GPU", "Fast inference", "Works with Flash Attention", "Mistral shows strong quality", "Simple to implement"],
-            cons: ["Loses distant context", "Not suitable for tasks needing global context", "Window size W is hyperparameter", "Stacking layers helps but not perfect", "Some benchmarks worse than full attention", "Recurrent context is approximation"]
+            pros: [
+                "Linear complexity O(nW)",
+                "Enables 100K+ contexts on single GPU",
+                "Fast inference",
+                "Works with Flash Attention",
+                "Mistral shows strong quality",
+                "Simple to implement"
+            ],
+            cons: [
+                "Loses distant context",
+                "Not suitable for tasks needing global context",
+                "Window size W is hyperparameter",
+                "Stacking layers helps but not perfect",
+                "Some benchmarks worse than full attention",
+                "Recurrent context is approximation"
+            ]
         }
-    }
+    },
+    connections: [
+        "Long Context"
+    ]
 };
 nodeDetails.sparse = {
     name: "Sparse Retrieval",
@@ -867,10 +2630,26 @@ nodeDetails.sparse = {
             "Limitations: No semantic understanding. 'dog' ≠ 'puppy'. Solved with hybrid retrieval."
         ],
         proscons: {
-            pros: ["Fast", "No embeddings needed", "Exact match perfect", "Interpretable", "Works offline"],
-            cons: ["No semantic matching", "Vocabulary mismatch", "Poor for paraphrases", "Language-specific", "Tuning needed"]
+            pros: [
+                "Fast",
+                "No embeddings needed",
+                "Exact match perfect",
+                "Interpretable",
+                "Works offline"
+            ],
+            cons: [
+                "No semantic matching",
+                "Vocabulary mismatch",
+                "Poor for paraphrases",
+                "Language-specific",
+                "Tuning needed"
+            ]
         }
-    }
+    },
+    connections: [
+        "RAG",
+        "Hybrid Retrieval"
+    ]
 };
 nodeDetails.speculativedecode = {
     name: "Speculative Decoding",
@@ -886,12 +2665,57 @@ nodeDetails.speculativedecode = {
             "Variants: Medusa (multiple decoding heads), Lookahead (tree-based speculation), REST (retrieval + speculation)."
         ],
         proscons: {
-            pros: ["2-3x speedup", "No quality loss (same distribution)", "Works out-of-box", "Tunable K for speed/quality", "Parallelizes well", "Draft model can be distilled"],
-            cons: ["Needs draft model (extra memory)", "Only helps if draft accurate", "CPU/GPU split tricky", "Low batch size required", "Implementation complexity", "Not all frameworks support"]
+            pros: [
+                "2-3x speedup",
+                "No quality loss (same distribution)",
+                "Works out-of-box",
+                "Tunable K for speed/quality",
+                "Parallelizes well",
+                "Draft model can be distilled"
+            ],
+            cons: [
+                "Needs draft model (extra memory)",
+                "Only helps if draft accurate",
+                "CPU/GPU split tricky",
+                "Low batch size required",
+                "Implementation complexity",
+                "Not all frameworks support"
+            ]
         }
-    }
+    },
+    connections: [
+        "Decoding"
+    ]
 };
-nodeDetails.structuredoutput = {name: "Structured Output", description: "Force LLM to generate valid JSON, XML. Grammar constraints, JSON mode.", details: {keyPoints: ["JSON mode: Guarantee valid JSON output", "Guided generation: Constrain via grammar (lm-format-enforcer)", "Validation: Parse and validate schema", "Retry: If invalid, regenerate with stricter prompt"], proscons: {pros: ["Reliable parsing", "No prompt engineering", "Guaranteed format"], cons: ["Slightly slower", "Limited model support", "Schema design needed"]}}};
+nodeDetails.structuredoutput = {
+    name: "Structured Output",
+    description: "Force LLM to generate valid JSON, XML. Grammar constraints, JSON mode.",
+    details: {
+        keyPoints: [
+            "JSON mode: Guarantee valid JSON output",
+            "Guided generation: Constrain via grammar (lm-format-enforcer)",
+            "Validation: Parse and validate schema",
+            "Retry: If invalid, regenerate with stricter prompt"
+        ],
+        proscons: {
+            pros: [
+                "Reliable parsing",
+                "No prompt engineering",
+                "Guaranteed format"
+            ],
+            cons: [
+                "Slightly slower",
+                "Limited model support",
+                "Schema design needed"
+            ]
+        }
+    },
+    connections: [
+        "Tool Use",
+        "JSON Mode",
+        "Parameter Extraction"
+    ]
+};
 nodeDetails.taskallocation = {
     name: "Task Allocation",
     description: "Distribute work among agents: static assignment, dynamic load balancing, auction-based, capability matching.",
@@ -905,10 +2729,25 @@ nodeDetails.taskallocation = {
             "Priority queues: High-priority tasks assigned first. Task dependencies handled via topological sort."
         ],
         proscons: {
-            pros: ["Static: Simple, predictable", "Dynamic: Better utilization", "Auction: Decentralized", "Capability: Quality matching", "Load balancing: Fair distribution"],
-            cons: ["Static: Inflexible", "Dynamic: Coordination overhead", "Auction: Convergence time", "Capability: Requires metadata", "All: Complexity"]
+            pros: [
+                "Static: Simple, predictable",
+                "Dynamic: Better utilization",
+                "Auction: Decentralized",
+                "Capability: Quality matching",
+                "Load balancing: Fair distribution"
+            ],
+            cons: [
+                "Static: Inflexible",
+                "Dynamic: Coordination overhead",
+                "Auction: Convergence time",
+                "Capability: Requires metadata",
+                "All: Complexity"
+            ]
         }
-    }
+    },
+    connections: [
+        "Multi-Agent"
+    ]
 };
 nodeDetails.tokenization = {
     name: "Tokenization",
@@ -942,10 +2781,75 @@ nodeDetails.tokenization = {
             ]
         }
     },
-    connections: ["Pre-training", "BPE", "SentencePiece", "Multilingual", "Embedding"]
+    connections: [
+        "Pre-training",
+        "BPE",
+        "SentencePiece",
+        "Multilingual",
+        "Embedding"
+    ]
 };
-nodeDetails.toolselection = {name: "Tool Selection", description: "Agent chooses which tool to use. Based on tool descriptions, past success.", details: {keyPoints: ["Description matching: Embed tool descriptions, semantic search", "ReAct-style: Model reasons about which tool needed", "Learned selection: Fine-tune on successful tool uses", "Fallback: If tool fails, try alternative or ask clarification"], proscons: {pros: ["Flexible", "Learns from experience", "Handles ambiguity"], cons: ["Selection errors", "Requires good descriptions", "Expensive (extra reasoning)"]}}};
-nodeDetails.tooluse = {name: "Tool Use", description: "LLMs call external functions/APIs. Extends capabilities beyond text generation.", details: {keyPoints: ["Function calling: LLM generates JSON with function name + args", "Execution: Parse JSON, validate, call function, return result", "Iterative: Model can call multiple tools sequentially", "Examples: Calculator, search, APIs, databases, code execution"], proscons: {pros: ["Extends LLM capabilities", "Grounded in real data", "Deterministic operations"], cons: ["Parsing errors", "Security risks", "Latency overhead"]}}};
+nodeDetails.toolselection = {
+    name: "Tool Selection",
+    description: "Agent chooses which tool to use. Based on tool descriptions, past success.",
+    details: {
+        keyPoints: [
+            "Description matching: Embed tool descriptions, semantic search",
+            "ReAct-style: Model reasons about which tool needed",
+            "Learned selection: Fine-tune on successful tool uses",
+            "Fallback: If tool fails, try alternative or ask clarification"
+        ],
+        proscons: {
+            pros: [
+                "Flexible",
+                "Learns from experience",
+                "Handles ambiguity"
+            ],
+            cons: [
+                "Selection errors",
+                "Requires good descriptions",
+                "Expensive (extra reasoning)"
+            ]
+        }
+    },
+    connections: [
+        "Tool Use"
+    ]
+};
+nodeDetails.tooluse = {
+    name: "Tool Use",
+    description: "LLMs call external functions/APIs. Extends capabilities beyond text generation.",
+    details: {
+        keyPoints: [
+            "Function calling: LLM generates JSON with function name + args",
+            "Execution: Parse JSON, validate, call function, return result",
+            "Iterative: Model can call multiple tools sequentially",
+            "Examples: Calculator, search, APIs, databases, code execution"
+        ],
+        proscons: {
+            pros: [
+                "Extends LLM capabilities",
+                "Grounded in real data",
+                "Deterministic operations"
+            ],
+            cons: [
+                "Parsing errors",
+                "Security risks",
+                "Latency overhead"
+            ]
+        }
+    },
+    connections: [
+        "Multimodal",
+        "ReAct",
+        "API Calling",
+        "Code Execution",
+        "Tool Selection",
+        "Parameter Extraction",
+        "Safety",
+        "Structured Output"
+    ]
+};
 nodeDetails.tot = {
     name: "Tree-of-Thoughts (ToT)",
     description: "Explore multiple reasoning paths as tree. Backtrack dead ends. Outperforms CoT on hard problems.",
@@ -960,12 +2864,64 @@ nodeDetails.tot = {
             "Cost: 10-100x more expensive than CoT (many LLM calls per problem). Only justified for hard problems where accuracy matters."
         ],
         proscons: {
-            pros: ["Solves hard problems CoT can't", "Explores multiple strategies", "Can backtrack and recover", "Interpretable tree structure", "Proven on Game of 24, crosswords", "Combines LLM with search"],
-            cons: ["10-100x more expensive", "Slow (many LLM calls)", "Overkill for simple tasks", "Requires good evaluator", "Implementation complexity", "Not widely adopted yet"]
+            pros: [
+                "Solves hard problems CoT can't",
+                "Explores multiple strategies",
+                "Can backtrack and recover",
+                "Interpretable tree structure",
+                "Proven on Game of 24, crosswords",
+                "Combines LLM with search"
+            ],
+            cons: [
+                "10-100x more expensive",
+                "Slow (many LLM calls)",
+                "Overkill for simple tasks",
+                "Requires good evaluator",
+                "Implementation complexity",
+                "Not widely adopted yet"
+            ]
         }
-    }
+    },
+    connections: [
+        "Planning",
+        "Chain-of-Thought"
+    ]
 };
-nodeDetails.transformer = {name: "Transformer Architecture", description: "Core neural architecture using self-attention. Foundation of modern LLMs (GPT, BERT, T5).", details: {keyPoints: ["Self-Attention: Computes relationships between all tokens", "Multi-Head: Parallel attention heads (8-96 typical)", "Position Encoding: Sine/cosine or learned embeddings", "Feed-Forward: 2-layer MLP after attention", "Layer Norm + Residuals: Stabilizes training"], proscons: {pros: ["Parallelizable unlike RNNs", "Long-range dependencies", "State-of-the-art across NLP", "Scales to billions of parameters"], cons: ["Quadratic O(n²) complexity", "Memory intensive", "Requires massive compute"]}}};
+nodeDetails.transformer = {
+    name: "Transformer Architecture",
+    description: "Core neural architecture using self-attention. Foundation of modern LLMs (GPT, BERT, T5).",
+    details: {
+        keyPoints: [
+            "Self-Attention: Computes relationships between all tokens",
+            "Multi-Head: Parallel attention heads (8-96 typical)",
+            "Position Encoding: Sine/cosine or learned embeddings",
+            "Feed-Forward: 2-layer MLP after attention",
+            "Layer Norm + Residuals: Stabilizes training"
+        ],
+        proscons: {
+            pros: [
+                "Parallelizable unlike RNNs",
+                "Long-range dependencies",
+                "State-of-the-art across NLP",
+                "Scales to billions of parameters"
+            ],
+            cons: [
+                "Quadratic O(n²) complexity",
+                "Memory intensive",
+                "Requires massive compute"
+            ]
+        }
+    },
+    connections: [
+        "Attention",
+        "Inference",
+        "Long Context",
+        "ViT",
+        "Embeddings",
+        "RAG",
+        "Planning"
+    ]
+};
 nodeDetails.vectordb = {
     name: "Vector Databases",
     description: "Specialized DBs for embedding storage and ANN search. Pinecone, Weaviate, Qdrant, Chroma, FAISS.",
@@ -979,15 +2935,139 @@ nodeDetails.vectordb = {
             "Chroma: Embedded. SQLite-style. Great for dev/prototyping. Production use via server mode."
         ],
         proscons: {
-            pros: ["FAISS: Fast, free", "Pinecone: Managed, scalable", "Weaviate: Hybrid search", "Qdrant: Performance", "Chroma: Easy dev"],
-            cons: ["FAISS: No server", "Pinecone: Expensive", "Weaviate: Complex", "Qdrant: Less mature", "Chroma: Not prod-scale"]
+            pros: [
+                "FAISS: Fast, free",
+                "Pinecone: Managed, scalable",
+                "Weaviate: Hybrid search",
+                "Qdrant: Performance",
+                "Chroma: Easy dev"
+            ],
+            cons: [
+                "FAISS: No server",
+                "Pinecone: Expensive",
+                "Weaviate: Complex",
+                "Qdrant: Less mature",
+                "Chroma: Not prod-scale"
+            ]
         }
-    }
+    },
+    connections: [
+        "Memory",
+        "Embeddings",
+        "ANN",
+        "Chunking",
+        "Dense Retrieval"
+    ]
 };
-nodeDetails.versioning = {name: "Model Versioning", description: "Track model versions, A/B test, gradual rollout.", details: {keyPoints: ["Semantic versioning: v1.0.0 (major.minor.patch)", "A/B testing: Measure quality, latency, cost", "Gradual rollout: 1% → 10% → 50% → 100%", "Shadow mode: Run new model, log outputs, don't serve"], proscons: {pros: ["Risk mitigation", "Measure impact", "Safe rollout"], cons: ["Double inference cost (shadow)", "Complexity", "Slow rollout"]}}};
-nodeDetails.videounderstand = {name: "Video Understanding", description: "Process video for LLMs: frame sampling, temporal modeling, video Q&A.", details: {keyPoints: ["Frame sampling: Extract N frames uniformly", "Temporal encoding: Position embeddings or 3D convolutions", "Video encoder: ViT on frames + temporal pooling", "Applications: Summarization, action recognition, Q&A"], proscons: {pros: ["Understand temporal context", "Richer than images", "Media/security/robotics applications"], cons: ["Extreme compute cost (100s of frames)", "Temporal reasoning weak", "Hard to scale to long videos"]}}};
-nodeDetails.vit = {name: "Vision Transformer", description: "Apply Transformer to images by splitting into patches. Replaces CNNs for vision.", details: {keyPoints: ["Split image into 16x16 patches", "Standard Transformer encoder", "Position embeddings for patches", "CLS token for classification"], proscons: {pros: ["Matches/beats CNNs with data", "Parallelizable", "Long-range dependencies"], cons: ["Data-hungry (needs 10M+ images)", "Slow to train", "No CNN inductive bias"]}}};
-nodeDetails.zero = {name: "ZeRO Optimizer", description: "Zero Redundancy Optimizer. Partitions model states across GPUs for memory-efficient distributed training.", details: {keyPoints: ["Stage 1: Partition optimizer states (4x reduction)", "Stage 2: Also partition gradients (8x reduction)", "Stage 3: Also partition parameters (memory scales 1/N)", "Used by DeepSpeed, PyTorch FSDP"], proscons: {pros: ["Train 10-1000x larger models", "Memory scales with GPU count", "Production-proven"], cons: ["Communication overhead (10-40%)", "Requires fast interconnect", "Complex setup"]}}};
+nodeDetails.versioning = {
+    name: "Model Versioning",
+    description: "Track model versions, A/B test, gradual rollout.",
+    details: {
+        keyPoints: [
+            "Semantic versioning: v1.0.0 (major.minor.patch)",
+            "A/B testing: Measure quality, latency, cost",
+            "Gradual rollout: 1% → 10% → 50% → 100%",
+            "Shadow mode: Run new model, log outputs, don't serve"
+        ],
+        proscons: {
+            pros: [
+                "Risk mitigation",
+                "Measure impact",
+                "Safe rollout"
+            ],
+            cons: [
+                "Double inference cost (shadow)",
+                "Complexity",
+                "Slow rollout"
+            ]
+        }
+    },
+    connections: [
+        "Agent Lifecycle"
+    ]
+};
+nodeDetails.videounderstand = {
+    name: "Video Understanding",
+    description: "Process video for LLMs: frame sampling, temporal modeling, video Q&A.",
+    details: {
+        keyPoints: [
+            "Frame sampling: Extract N frames uniformly",
+            "Temporal encoding: Position embeddings or 3D convolutions",
+            "Video encoder: ViT on frames + temporal pooling",
+            "Applications: Summarization, action recognition, Q&A"
+        ],
+        proscons: {
+            pros: [
+                "Understand temporal context",
+                "Richer than images",
+                "Media/security/robotics applications"
+            ],
+            cons: [
+                "Extreme compute cost (100s of frames)",
+                "Temporal reasoning weak",
+                "Hard to scale to long videos"
+            ]
+        }
+    },
+    connections: [
+        "Multimodal"
+    ]
+};
+nodeDetails.vit = {
+    name: "Vision Transformer",
+    description: "Apply Transformer to images by splitting into patches. Replaces CNNs for vision.",
+    details: {
+        keyPoints: [
+            "Split image into 16x16 patches",
+            "Standard Transformer encoder",
+            "Position embeddings for patches",
+            "CLS token for classification"
+        ],
+        proscons: {
+            pros: [
+                "Matches/beats CNNs with data",
+                "Parallelizable",
+                "Long-range dependencies"
+            ],
+            cons: [
+                "Data-hungry (needs 10M+ images)",
+                "Slow to train",
+                "No CNN inductive bias"
+            ]
+        }
+    },
+    connections: [
+        "Multimodal",
+        "Transformer"
+    ]
+};
+nodeDetails.zero = {
+    name: "ZeRO Optimizer",
+    description: "Zero Redundancy Optimizer. Partitions model states across GPUs for memory-efficient distributed training.",
+    details: {
+        keyPoints: [
+            "Stage 1: Partition optimizer states (4x reduction)",
+            "Stage 2: Also partition gradients (8x reduction)",
+            "Stage 3: Also partition parameters (memory scales 1/N)",
+            "Used by DeepSpeed, PyTorch FSDP"
+        ],
+        proscons: {
+            pros: [
+                "Train 10-1000x larger models",
+                "Memory scales with GPU count",
+                "Production-proven"
+            ],
+            cons: [
+                "Communication overhead (10-40%)",
+                "Requires fast interconnect",
+                "Complex setup"
+            ]
+        }
+    },
+    connections: [
+        "Distributed Training"
+    ]
+};
 nodeDetails.zeroshot = {
     name: "Zero-Shot Learning",
     description: "LLM performs task without examples, just instruction. Tests general capability and instruction-following.",
@@ -1002,10 +3082,28 @@ nodeDetails.zeroshot = {
             "Evaluation: Compare zero-shot vs few-shot performance. Gap indicates how much model relies on pattern-matching vs true understanding."
         ],
         proscons: {
-            pros: ["No examples needed", "Shortest prompt (cheapest)", "Tests true understanding", "Fast to deploy", "Works for novel tasks", "Instruction-tuned models excel"],
-            cons: ["Lower quality than few-shot", "Requires very clear instructions", "Sensitive to wording", "Fails on ambiguous tasks", "No task-specific guidance", "Model must be instruction-tuned"]
+            pros: [
+                "No examples needed",
+                "Shortest prompt (cheapest)",
+                "Tests true understanding",
+                "Fast to deploy",
+                "Works for novel tasks",
+                "Instruction-tuned models excel"
+            ],
+            cons: [
+                "Lower quality than few-shot",
+                "Requires very clear instructions",
+                "Sensitive to wording",
+                "Fails on ambiguous tasks",
+                "No task-specific guidance",
+                "Model must be instruction-tuned"
+            ]
         }
-    }
+    },
+    connections: [
+        "Prompting",
+        "Few-Shot"
+    ]
 };
 
 module.exports = nodeDetails;
