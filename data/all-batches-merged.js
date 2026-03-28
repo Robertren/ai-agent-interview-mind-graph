@@ -31,7 +31,27 @@ nodeDetails.agentbench = {
     },
     connections: [
         "Benchmarks"
-    ]
+    ],
+    name_zh: "智能体基准",
+    description_zh: "针对智能体的基准：WebArena、AgentBench用于工具使用和多步推理。",
+    keyPoints_zh: [
+        "WebArena: 网页导航任务。800+真实场景",
+        "AgentBench: 多领域（代码、游戏、网页）。工具使用+规划",
+        "ToolBench: 16K+ API。函数调用评估",
+        "成功率: 正确完成任务的百分比"
+    ],
+    proscons_zh: {
+        pros: [
+            "真实任务",
+            "多步骤",
+            "工具使用"
+        ],
+        cons: [
+            "难以运行（需要环境）",
+            "主观成功标准",
+            "昂贵"
+        ]
+    }
 };
 nodeDetails.agentframeworks = {
     name: "Agent Frameworks",
@@ -95,7 +115,27 @@ nodeDetails.alignment = {
         "RLHF",
         "Safety",
         "DPO"
-    ]
+    ],
+    name_zh: "对齐",
+    description_zh: "通过RLHF、DPO等技术将模型与人类偏好对齐（有帮助、无害、诚实）。",
+    keyPoints_zh: [
+        "RLHF: 在人类偏好上训练奖励模型，使用PPO优化",
+        "DPO: 直接偏好优化。比RLHF更简单",
+        "Constitutional AI: 模型自我批评，迭代改进",
+        "目标: 有帮助性、无害性、诚实性 (HHH)"
+    ],
+    proscons_zh: {
+        pros: [
+            "改善模型行为",
+            "减少有毒内容",
+            "更好地遵循指令"
+        ],
+        cons: [
+            "昂贵（需要人工标注）",
+            "谄媚风险",
+            "可能降低能力"
+        ]
+    }
 };
 nodeDetails.ann = {
     name: "Approximate Nearest Neighbor",
@@ -286,7 +326,28 @@ nodeDetails.audioprocess = {
     },
     connections: [
         "Multimodal"
-    ]
+    ],
+    name_zh: "音频处理",
+    description_zh: "为LLM处理音频：语音转文本（Whisper）、音频嵌入、语音克隆。",
+    keyPoints_zh: [
+        "语音转文本: Whisper将语音 → 文本",
+        "音频嵌入: CLAP (音频CLIP)",
+        "文本转语音: 语音生成 (ElevenLabs, Bark)",
+        "音频token: AudioLM, MusicLM"
+    ],
+    proscons_zh: {
+        pros: [
+            "自然语音接口",
+            "可访问性",
+            "多语言支持"
+        ],
+        cons: [
+            "隐私（语音识别）",
+            "口音/方言偏见",
+            "背景噪音问题",
+            "语音克隆滥用"
+        ]
+    }
 };
 nodeDetails.auditlog = {
     name: "Audit Logging",
@@ -519,7 +580,36 @@ nodeDetails.bpe = {
         "GPT-2",
         "Subword Units",
         "Vocabulary"
-    ]
+    ],
+    name_zh: "字节对编码 (BPE)",
+    description_zh: "迭代合并最频繁的相邻字符对以构建子词词汇表，用于GPT-2/3/4。",
+    keyPoints_zh: [
+        "<strong>算法:</strong> 从字符级词汇表开始。统计相邻对。合并最频繁的对。重复直到达到目标大小（30K-50K）。",
+        "<strong>分词过程:</strong> 按学习的合并顺序应用。结果：字符、子词、完整词的混合。",
+        "<strong>GPT-2 BPE细节:</strong> 50,257词汇量。使用字节级编码 + 合并。空格前缀表示法。",
+        "<strong>频率偏差:</strong> 常见词=单token。罕见词=多个子词token。非英语文本严重受损：中文字符平均3-5个token（英语词为1）。",
+        "<strong>开放词汇特性:</strong> 任何文本都可编码。无需[UNK] token。优雅处理拼写错误、罕见词、代码。",
+        "<strong>训练数据依赖:</strong> BPE词汇强依赖训练语料。GPT-2针对英语优化。多语言训练需公平对待其他语言。",
+        "<strong>实现细节:</strong> HuggingFace tokenizers：快速Rust实现（1M token/秒）。缓存频繁映射。"
+    ],
+    proscons_zh: {
+        pros: [
+            "开放词汇：无[UNK] token，处理任何文本",
+            "数据驱动：从语料学习最优分割",
+            "语言无关：适用任何语言",
+            "压缩：序列长度减少3-5倍",
+            "简单：易于实现和理解",
+            "快速：分词<1ms"
+        ],
+        cons: [
+            "语言偏见：英语优先",
+            "不一致分割：'apple'(1 token) vs 'apples'(2 tokens)",
+            "空格敏感：'hello' vs ' hello'是不同token",
+            "训练语料依赖：词汇编码偏见",
+            "贪心算法：非全局最优",
+            "空格问题：难以重建原始文本"
+        ]
+    }
 };
 nodeDetails.caching = {
     name: "Response Caching",
@@ -804,7 +894,27 @@ nodeDetails.contextmgmt = {
         "Memory",
         "Conversation Summarization",
         "Long Context"
-    ]
+    ],
+    name_zh: "上下文管理",
+    description_zh: "管理上下文窗口：摘要、选择性注意、层次压缩。",
+    keyPoints_zh: [
+        "摘要: 压缩旧对话 → 摘要",
+        "滑动窗口: 保留最近N个token，丢弃旧的",
+        "层次化: 摘要金字塔（详细的最近，压缩的旧）",
+        "选择性: 仅检索相关的过去上下文"
+    ],
+    proscons_zh: {
+        pros: [
+            "扩展有效记忆",
+            "控制token使用",
+            "降低成本"
+        ],
+        cons: [
+            "有损压缩",
+            "摘要错误",
+            "复杂性"
+        ]
+    }
 };
 nodeDetails.convsummarization = {
     name: "Conversation Summarization",
@@ -832,7 +942,27 @@ nodeDetails.convsummarization = {
     connections: [
         "Context Window Management",
         "Episodic Memory"
-    ]
+    ],
+    name_zh: "对话摘要",
+    description_zh: "压缩长对话以实现高效上下文管理。",
+    keyPoints_zh: [
+        "渐进式: 每N轮后摘要",
+        "基于LLM: '摘要此对话'",
+        "抽取式vs抽象式",
+        "多级: 保留详细的最近 + 压缩的旧"
+    ],
+    proscons_zh: {
+        pros: [
+            "压缩10x-100x",
+            "保持关键点",
+            "降低成本"
+        ],
+        cons: [
+            "信息损失",
+            "摘要成本",
+            "质量变化"
+        ]
+    }
 };
 nodeDetails.coordination = {
     name: "Agent Coordination",
@@ -1074,7 +1204,36 @@ nodeDetails.decoding = {
         "Inference",
         "Sampling",
         "Speculative Decoding"
-    ]
+    ],
+    name_zh: "解码策略",
+    description_zh: "从LLM生成文本的方法：贪心、束搜索、采样（温度、top-p、top-k）。",
+    keyPoints_zh: [
+        "贪心: 总是选概率最高的token。快速、确定性。质量差（重复、通用）。",
+        "束搜索: 维护k个最佳序列。每步扩展所有k个束，保留前k个。k=3-10典型。",
+        "温度采样: P'(token) = P(token)^(1/T) / Z。T<1更自信，T>1更随机。T=0.7适合事实，T=1.2适合创意。",
+        "Top-p (核采样): 从累积概率≥p的最小token集采样。p=0.9典型。动态适应词汇量。",
+        "Top-k: 仅从前k个最高概率token采样。k=40-100典型。比top-p简单但固定词汇量。",
+        "重复惩罚: 惩罚最近使用的token。减少重复但过激会损害连贯性（>1.2）。",
+        "Min-p、典型采样: 高级变体。较少见但有时质量更好。"
+    ],
+    proscons_zh: {
+        pros: [
+            "贪心：快速、确定性、可复现",
+            "束搜索：比贪心质量好，仍确定性",
+            "采样：多样化输出、创意",
+            "Top-p：自适应词汇量",
+            "Top-k：简单、有效",
+            "组合效果好"
+        ],
+        cons: [
+            "贪心：重复、低质量",
+            "束搜索：计算昂贵（k倍慢）",
+            "温度：难以针对任务调优",
+            "Top-p：仍可能重复",
+            "所有：需要超参调优",
+            "无法保证事实正确性"
+        ]
+    }
 };
 nodeDetails.dense = {
     name: "Dense Retrieval",
@@ -1170,7 +1329,36 @@ nodeDetails.distillation = {
         "SFT",
         "Alpaca",
         "Constitutional AI"
-    ]
+    ],
+    name_zh: "知识蒸馏",
+    description_zh: "训练小型学生模型来模仿大型教师模型的输出，在保持性能的同时压缩知识。",
+    keyPoints_zh: [
+        "<strong>核心概念:</strong> 训练学生模型（小、快）匹配教师模型（大、准确）的输出。损失 = α × CE(学生, 标签) + (1-α) × KL(学生logits, 教师logits)。温度缩放使分布更平滑。软标签包含更多信息。",
+        "<strong>为何有效:</strong> 教师输出编码'暗知识'：类别间关系。学生学习这些细微差别。通常用10%参数达到教师95-98%性能。",
+        "<strong>LLM蒸馏:</strong> DistilBERT: 6层vs BERT的12层，97%性能，2倍速。Alpaca: 7B LLaMA在GPT-3.5输出上微调，$500成本。",
+        "<strong>自蒸馏:</strong> 模型作为自己的教师。迭代训练改进（3-5次迭代）。Constitutional AI使用此方法。",
+        "<strong>渐进式蒸馏:</strong> 逐层移除而非一次性。12层→11→10...→6。TinyBERT、MobileBERT使用。4-6倍小，<1%质量损失。",
+        "<strong>在线vs离线策略:</strong> 在线: 学生生成，教师反馈（RLHF）。离线: 教师预生成数据集（Alpaca风格）。",
+        "<strong>多教师蒸馏:</strong> 使用多个教师（GPT-4, Claude, Gemini）训练单个学生。学习共识知识，避免偏见。"
+    ],
+    proscons_zh: {
+        pros: [
+            "压缩: 10倍小，95-99%性能保留",
+            "速度: 2-10倍快推理",
+            "民主化: 蒸馏GPT-4到7B，本地运行",
+            "隐私: 蒸馏本地模型，避免发送数据到API",
+            "数据效率: 需要更少标注数据",
+            "专业化: 蒸馏特定任务知识"
+        ],
+        cons: [
+            "质量上限: 学生上限95-99%",
+            "教师依赖: 需要访问教师logits",
+            "训练成本: 需要教师推理",
+            "遗忘: 可能忘记罕见知识",
+            "超参敏感: α、T需要仔细调优",
+            "版权/许可: 使用GPT-4输出可能违反服务条款"
+        ]
+    }
 };
 nodeDetails.distributed = {
     name: "Distributed Training",
@@ -1241,7 +1429,28 @@ nodeDetails.dpo = {
         "SFT",
         "RLHF",
         "Alignment"
-    ]
+    ],
+    name_zh: "DPO (直接偏好优化)",
+    description_zh: "直接偏好优化。比RLHF更简单，不需要奖励模型。",
+    keyPoints_zh: [
+        "直接优化: 在偏好对（选中、拒绝）上优化",
+        "损失函数: -log σ(β log π_θ(y_w|x) / π_ref(y_w|x) - β log π_θ(y_l|x) / π_ref(y_l|x))",
+        "优势: 比RLHF更简单、更快、更稳定",
+        "质量: 在许多任务上与RLHF相似"
+    ],
+    proscons_zh: {
+        pros: [
+            "比RLHF更简单",
+            "不需要奖励模型",
+            "训练更快",
+            "更稳定"
+        ],
+        cons: [
+            "仍需要人类偏好数据",
+            "灵活性较低",
+            "较新（验证较少）"
+        ]
+    }
 };
 nodeDetails.embeddings = {
     name: "Embedding Models",
@@ -1374,7 +1583,27 @@ nodeDetails.errorhandling = {
     },
     connections: [
         "API Calling"
-    ]
+    ],
+    name_zh: "错误处理",
+    description_zh: "重试逻辑、备用方案、错误消息，构建鲁棒的智能体。",
+    keyPoints_zh: [
+        "重试: 指数退避 (1s, 2s, 4s)",
+        "备用: 替代工具或简化请求",
+        "错误消息: 人类可读、可操作",
+        "熔断器: N次失败后停止重试"
+    ],
+    proscons_zh: {
+        pros: [
+            "鲁棒性",
+            "用户友好",
+            "防止级联失败"
+        ],
+        cons: [
+            "延迟开销",
+            "复杂性",
+            "重试成本"
+        ]
+    }
 };
 nodeDetails.evaluation = {
     name: "LLM Evaluation",
@@ -1800,7 +2029,27 @@ nodeDetails.jsonmode = {
     },
     connections: [
         "Structured Output"
-    ]
+    ],
+    name_zh: "JSON模式",
+    description_zh: "OpenAI、Anthropic支持保证JSON输出。",
+    keyPoints_zh: [
+        "API参数: response_format={'type': 'json_object'}",
+        "保证: 输出始终是有效JSON",
+        "模式: 仍需验证内容符合预期模式",
+        "用例: 函数调用、结构化数据提取"
+    ],
+    proscons_zh: {
+        pros: [
+            "100%有效JSON",
+            "无解析错误",
+            "使用简单"
+        ],
+        cons: [
+            "模型支持有限",
+            "无模式验证",
+            "略贵"
+        ]
+    }
 };
 nodeDetails.knowledgegraph = {
     name: "Knowledge Graphs",
@@ -1980,7 +2229,27 @@ nodeDetails.lifecycle = {
         "Production",
         "Versioning / A/B Testing",
         "Monitoring"
-    ]
+    ],
+    name_zh: "模型生命周期",
+    description_zh: "生产模型的版本管理、部署、回滚、A/B测试。",
+    keyPoints_zh: [
+        "版本管理: 模型v1、v2、v3。跟踪变化",
+        "金丝雀部署: 5%流量给新模型，监控，推出",
+        "A/B测试: 50/50分流，测量质量/成本",
+        "回滚: 新模型降级时立即恢复"
+    ],
+    proscons_zh: {
+        pros: [
+            "安全部署",
+            "测量影响",
+            "快速回滚"
+        ],
+        cons: [
+            "基础设施复杂性",
+            "流量分割",
+            "监控负担"
+        ]
+    }
 };
 nodeDetails.longcontext = {
     name: "Long Context Handling",
@@ -2011,7 +2280,27 @@ nodeDetails.longcontext = {
         "Sliding Window",
         "Attention",
         "Context Window Management"
-    ]
+    ],
+    name_zh: "长上下文处理",
+    description_zh: "将上下文扩展到训练长度之外的技术：RoPE缩放、滑动窗口、稀疏注意力。",
+    keyPoints_zh: [
+        "滑动窗口: 仅关注最近N个token",
+        "RoPE缩放: 插值位置嵌入",
+        "稀疏注意力: 关注子集（局部 + 全局）",
+        "Flash Attention: 融合内核提高效率"
+    ],
+    proscons_zh: {
+        pros: [
+            "处理整本书/代码库",
+            "减少RAG查询次数",
+            "更好的文档理解"
+        ],
+        cons: [
+            "极端长度下质量下降",
+            "中间丢失问题",
+            "仍然昂贵"
+        ]
+    }
 };
 nodeDetails.lora = {
     name: "LoRA",
@@ -2152,7 +2441,27 @@ nodeDetails.mmlu = {
     },
     connections: [
         "Benchmarks"
-    ]
+    ],
+    name_zh: "MMLU (大规模多任务语言理解)",
+    description_zh: "大规模多任务语言理解。57个学科，15K问题。知识基准。",
+    keyPoints_zh: [
+        "学科: STEM、人文、社会科学、专业",
+        "格式: 多项选择，4个选项",
+        "难度: 高中到专家级别",
+        "分数: GPT-4约86%，随机约25%"
+    ],
+    proscons_zh: {
+        pros: [
+            "广泛覆盖",
+            "标准化",
+            "易于运行"
+        ],
+        cons: [
+            "多项选择偏差",
+            "不测试生成",
+            "可被投机取巧"
+        ]
+    }
 };
 nodeDetails.modelrouting = {
     name: "Model Routing",
@@ -2179,7 +2488,27 @@ nodeDetails.modelrouting = {
     },
     connections: [
         "Cost Management"
-    ]
+    ],
+    name_zh: "模型路由",
+    description_zh: "根据复杂度、成本、延迟要求将请求路由到不同模型。",
+    keyPoints_zh: [
+        "复杂度分类器: 预测查询是简单/困难",
+        "简单 → 小模型（GPT-3.5），困难 → 大模型（GPT-4）",
+        "备用: 如果小模型失败，用大模型重试",
+        "节省: 50-70%成本，保持80%+质量"
+    ],
+    proscons_zh: {
+        pros: [
+            "成本优化",
+            "延迟改善",
+            "质量维持"
+        ],
+        cons: [
+            "分类器错误",
+            "复杂性",
+            "需要两个模型"
+        ]
+    }
 };
 nodeDetails.monitoring = {
     name: "Monitoring",
@@ -2256,7 +2585,27 @@ nodeDetails.mtbench = {
     },
     connections: [
         "Benchmarks"
-    ]
+    ],
+    name_zh: "MT-Bench (多轮对话基准)",
+    description_zh: "多轮对话。80个问题。GPT-4评判质量（1-10分）。",
+    keyPoints_zh: [
+        "多轮: 每个对话2轮。测试一致性",
+        "评判: GPT-4评估帮助性、相关性、正确性",
+        "类别: 写作、角色扮演、推理、数学、编码",
+        "分数: GPT-4约9.0，GPT-3.5约7.9"
+    ],
+    proscons_zh: {
+        pros: [
+            "多轮对话",
+            "对话性强",
+            "注重质量"
+        ],
+        cons: [
+            "GPT-4评判偏差",
+            "昂贵",
+            "80题（小规模）"
+        ]
+    }
 };
 nodeDetails.multiagent = {
     name: "Multi-Agent Systems",
@@ -2407,7 +2756,27 @@ nodeDetails.paramextract = {
     connections: [
         "Tool Use",
         "Structured Output"
-    ]
+    ],
+    name_zh: "参数提取",
+    description_zh: "从自然语言查询中提取函数参数。",
+    keyPoints_zh: [
+        "槽填充: 识别实体（城市、日期、数字）",
+        "JSON模式: 强制模型输出有效JSON",
+        "验证: 检查类型、范围、必填字段",
+        "澄清: 如果缺少参数询问用户"
+    ],
+    proscons_zh: {
+        pros: [
+            "自然语言接口",
+            "灵活",
+            "无需表单"
+        ],
+        cons: [
+            "提取错误",
+            "歧义",
+            "需要验证"
+        ]
+    }
 };
 nodeDetails.planexec = {
     name: "Plan-and-Execute",
@@ -2499,7 +2868,29 @@ nodeDetails.planning = {
         "Prompting",
         "Multi-Agent",
         "Transformer"
-    ]
+    ],
+    name_zh: "规划",
+    description_zh: "高层任务分解和排序。将复杂目标分解为子任务。",
+    keyPoints_zh: [
+        "任务分解: 复杂目标 → 子任务",
+        "层次化: 多级计划",
+        "重新规划: 动态处理失败",
+        "计划格式: 自然语言、JSON、PDDL、代码"
+    ],
+    proscons_zh: {
+        pros: [
+            "处理复杂多步任务",
+            "比反应式更有组织",
+            "更容易调试（检查计划）",
+            "可重用计划"
+        ],
+        cons: [
+            "规划错误会累积",
+            "对变化脆弱",
+            "昂贵（额外LLM调用）",
+            "过度规划风险"
+        ]
+    }
 };
 nodeDetails.pretraining = {
     name: "Pre-training",
@@ -2967,7 +3358,27 @@ nodeDetails.ratelimit = {
     },
     connections: [
         "API Calling"
-    ]
+    ],
+    name_zh: "速率限制管理",
+    description_zh: "处理API配额、节流、成本控制。",
+    keyPoints_zh: [
+        "令牌桶: 每分钟允许N个请求",
+        "遇429指数退避",
+        "配额跟踪: 监控使用量vs限制",
+        "优先级: 高优先级请求优先"
+    ],
+    proscons_zh: {
+        pros: [
+            "遵守API限制",
+            "成本控制",
+            "公平使用"
+        ],
+        cons: [
+            "延迟峰值",
+            "跟踪复杂性",
+            "用户沮丧"
+        ]
+    }
 };
 nodeDetails.react = {
     name: "ReAct (Reason + Act)",
@@ -3145,7 +3556,27 @@ nodeDetails.rlhf = {
         "DPO",
         "Alignment",
         "Evaluation"
-    ]
+    ],
+    name_zh: "RLHF (人类反馈强化学习)",
+    description_zh: "基于人类反馈的强化学习。训练奖励模型，使用PPO优化。",
+    keyPoints_zh: [
+        "阶段1: 在示范数据上进行监督微调 (SFT)",
+        "阶段2: 在人类偏好上训练奖励模型",
+        "阶段3: 使用PPO优化策略以最大化奖励",
+        "应用案例: InstructGPT, ChatGPT, Claude"
+    ],
+    proscons_zh: {
+        pros: [
+            "与人类对齐",
+            "减少有毒内容",
+            "更好地遵循指令"
+        ],
+        cons: [
+            "昂贵（人工标注）",
+            "谄媚问题",
+            "奖励黑客"
+        ]
+    }
 };
 nodeDetails.rope = {
     name: "RoPE (Rotary Position Embedding)",
@@ -3181,7 +3612,36 @@ nodeDetails.rope = {
     },
     connections: [
         "Long Context"
-    ]
+    ],
+    name_zh: "RoPE (旋转位置嵌入)",
+    description_zh: "通过旋转查询/键向量来编码位置。相对位置自然出现。用于LLaMA、GPT-NeoX。",
+    keyPoints_zh: [
+        "核心思想: Q、K乘以旋转矩阵。旋转角度 = 位置 × 频率。相对位置编码在点积角度差中。",
+        "数学: RoPE(x, m) = x · R(mθ)，R为旋转矩阵，m为位置，θ为频率。",
+        "频率: θ_i = base^(-2i/d)，base=10000（默认），d=维度。不同维度不同频率。",
+        "相对编码: Q·K^T = (Rq)·(Rk)^T，仅依赖(m-n)，不依赖绝对位置。",
+        "相比正弦优势: 乘法（非加法）。天然相对。更好外推到长序列。",
+        "长上下文缩放: 线性插值（压缩位置）。NTK感知（调整基频）。YaRN（非均匀缩放）。实现2K→32K扩展。",
+        "实现: 预计算cos/sin查找表。运行时逐元素旋转。开销可忽略（<1%计算）。"
+    ],
+    proscons_zh: {
+        pros: [
+            "自然相对位置",
+            "外推性好",
+            "高效（预计算表）",
+            "无可训练参数",
+            "缩放后支持长上下文",
+            "用于LLaMA、GPT-NeoX"
+        ],
+        cons: [
+            "比正弦稍复杂",
+            "需要特定Q,K修改",
+            "缩放方法需调优",
+            "非所有框架支持",
+            "旋转概念较难理解",
+            "维度必须为偶数"
+        ]
+    }
 };
 nodeDetails.safety = {
     name: "AI Safety",
@@ -3700,7 +4160,36 @@ nodeDetails.slidingwindow = {
     },
     connections: [
         "Long Context"
-    ]
+    ],
+    name_zh: "滑动窗口注意力",
+    description_zh: "每个token仅关注最后W个token。将O(n²)降至O(nW)。用于Mistral 7B。",
+    keyPoints_zh: [
+        "机制: token i关注tokens max(0, i-W)到i。W=512-4096典型。创建带状注意力模式。",
+        "复杂度: O(nW)而非O(n²)。W=4K，n=100K时：O(400M) vs O(10B)。25倍减少。",
+        "递归层: 堆叠多层滑动窗口。层1看W个token，层2看2W。L层 = L×W有效上下文。",
+        "Mistral 7B: 每层W=4096，32层。有效上下文 = 128K tokens (32×4K)。但失去全局注意力。",
+        "权衡: 长序列快。丢失远距离上下文（适合局部任务如代码补全）。混合方法：部分全局token + 滑动窗口。",
+        "Flash Attention兼容: 可结合滑动窗口与Flash Attention进一步节省内存。",
+        "实现: 屏蔽注意力矩阵，将窗口外token清零。或结合因果 + 滑动窗口掩码。"
+    ],
+    proscons_zh: {
+        pros: [
+            "线性复杂度O(nW)",
+            "单GPU上实现100K+上下文",
+            "快速推理",
+            "与Flash Attention兼容",
+            "Mistral显示强大质量",
+            "实现简单"
+        ],
+        cons: [
+            "丢失远距离上下文",
+            "不适合需要全局上下文的任务",
+            "窗口大小W是超参数",
+            "堆叠层有帮助但不完美",
+            "某些基准测试不如全注意力",
+            "递归上下文是近似"
+        ]
+    }
 };
 nodeDetails.sparse = {
     name: "Sparse Retrieval",
@@ -3821,7 +4310,27 @@ nodeDetails.structuredoutput = {
         "Tool Use",
         "JSON Mode",
         "Parameter Extraction"
-    ]
+    ],
+    name_zh: "结构化输出",
+    description_zh: "强制LLM生成有效JSON、XML。语法约束、JSON模式。",
+    keyPoints_zh: [
+        "JSON模式: 保证有效JSON输出",
+        "引导生成: 通过语法约束（lm-format-enforcer）",
+        "验证: 解析和验证模式",
+        "重试: 如果无效，用更严格提示重新生成"
+    ],
+    proscons_zh: {
+        pros: [
+            "可靠解析",
+            "无需提示工程",
+            "保证格式"
+        ],
+        cons: [
+            "略慢",
+            "模型支持有限",
+            "需要模式设计"
+        ]
+    }
 };
 nodeDetails.taskallocation = {
     name: "Task Allocation",
@@ -4242,7 +4751,27 @@ nodeDetails.versioning = {
     },
     connections: [
         "Agent Lifecycle"
-    ]
+    ],
+    name_zh: "模型版本管理",
+    description_zh: "跟踪模型版本、A/B测试、逐步推出。",
+    keyPoints_zh: [
+        "语义版本: v1.0.0（主版本.次版本.补丁）",
+        "A/B测试: 测量质量、延迟、成本",
+        "逐步推出: 1% → 10% → 50% → 100%",
+        "影子模式: 运行新模型，记录输出，不提供服务"
+    ],
+    proscons_zh: {
+        pros: [
+            "风险缓解",
+            "测量影响",
+            "安全推出"
+        ],
+        cons: [
+            "双倍推理成本（影子）",
+            "复杂性",
+            "推出缓慢"
+        ]
+    }
 };
 nodeDetails.videounderstand = {
     name: "Video Understanding",
@@ -4344,7 +4873,27 @@ nodeDetails.zero = {
     },
     connections: [
         "Distributed Training"
-    ]
+    ],
+    name_zh: "ZeRO优化器",
+    description_zh: "零冗余优化器。在GPU间分区模型状态，实现内存高效的分布式训练。",
+    keyPoints_zh: [
+        "阶段1: 分区优化器状态（4倍减少）",
+        "阶段2: 也分区梯度（8倍减少）",
+        "阶段3: 也分区参数（内存按1/N缩放）",
+        "用于DeepSpeed、PyTorch FSDP"
+    ],
+    proscons_zh: {
+        pros: [
+            "训练10-1000倍更大模型",
+            "内存随GPU数量缩放",
+            "生产验证"
+        ],
+        cons: [
+            "通信开销（10-40%）",
+            "需要快速互连",
+            "设置复杂"
+        ]
+    }
 };
 nodeDetails.zeroshot = {
     name: "Zero-Shot Learning",
